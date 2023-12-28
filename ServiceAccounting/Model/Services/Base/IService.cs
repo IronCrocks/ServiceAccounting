@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceAccounting.Model.Services.Base
+namespace ServiceAccounting.Model.Services.Base;
+
+internal interface IService
 {
-    internal interface IService
-    {
-    }
 }

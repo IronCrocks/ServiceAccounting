@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceAccounting.View.Base
+namespace ServiceAccounting.View.Base;
+
+public interface ICustomersView
 {
-    internal interface ICustomersView
-    {
-    }
+    public event EventHandler Load;
 }

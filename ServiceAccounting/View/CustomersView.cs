@@ -12,9 +12,10 @@ using ServiceAccounting.Model;
 
 namespace ServiceAccounting.View
 {
-    public partial class CustomersView : UserControl
+    public partial class CustomersView : UserControl, ICustomersView
     {
         ApplicationContext _dbContext;
+
         public CustomersView()
         {
             InitializeComponent();
@@ -55,6 +56,13 @@ namespace ServiceAccounting.View
 
             bs.DataSource = query.ToList();
             gridControl1.DataSource = bs;
+
+            OnLoad(EventArgs.Empty);
+        }
+
+        protected virtual void OnLoad(EventArgs e)
+        {
+            Load?.Invoke(sender, e);
         }
 
         private void gridView1_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)

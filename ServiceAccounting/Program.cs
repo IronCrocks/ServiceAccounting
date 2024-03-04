@@ -1,11 +1,4 @@
-﻿using DevExpress.LookAndFeel;
-using DevExpress.Skins;
-using DevExpress.UserSkins;
-using Microsoft.EntityFrameworkCore;
-using ServiceAccounting.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Windows.Forms;
 
 namespace ServiceAccounting;
@@ -18,6 +11,10 @@ internal static class Program
     [STAThread]
     static void Main()
     {
+        using var db = new ApplicationContext();
+        //db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
+
         //using (ApplicationContext db = new ApplicationContext())
         //{
         //    //db.Database.ExecuteSqlRaw(@"CREATE VIEW CustomersTotalSumView AS 
@@ -33,6 +30,6 @@ internal static class Program
         //}
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
-        Application.Run(new Form1());
+        Application.Run(new MainForm());
     }
 }

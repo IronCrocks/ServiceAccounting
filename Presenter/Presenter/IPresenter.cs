@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceAccounting.Model.Services.Base;
-
-public interface IService
+namespace ServiceAccounting.Presenter
 {
+    internal interface IPresenter
+    {
+    }
 }

@@ -1,6 +1,6 @@
 ﻿namespace ServiceAccounting
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
-            simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-            simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
+            btnCustomers = new DevExpress.XtraEditors.SimpleButton();
+            btnProducts = new DevExpress.XtraEditors.SimpleButton();
+            btnOrders = new DevExpress.XtraEditors.SimpleButton();
             panelControl1 = new DevExpress.XtraEditors.PanelControl();
             panelControl2 = new DevExpress.XtraEditors.PanelControl();
             ((System.ComponentModel.ISupportInitialize)panelControl1).BeginInit();
@@ -38,38 +38,38 @@
             ((System.ComponentModel.ISupportInitialize)panelControl2).BeginInit();
             SuspendLayout();
             // 
-            // simpleButton1
+            // btnCustomers
             // 
-            simpleButton1.Location = new System.Drawing.Point(12, 12);
-            simpleButton1.Name = "simpleButton1";
-            simpleButton1.Size = new System.Drawing.Size(75, 23);
-            simpleButton1.TabIndex = 0;
-            simpleButton1.Text = "Покупатели";
-            simpleButton1.Click += simpleButton1_Click;
+            btnCustomers.Location = new System.Drawing.Point(12, 12);
+            btnCustomers.Name = "btnCustomers";
+            btnCustomers.Size = new System.Drawing.Size(75, 23);
+            btnCustomers.TabIndex = 0;
+            btnCustomers.Text = "Покупатели";
+            btnCustomers.Click += btnCustomers_Click;
             // 
-            // simpleButton2
+            // btnProducts
             // 
-            simpleButton2.Location = new System.Drawing.Point(93, 12);
-            simpleButton2.Name = "simpleButton2";
-            simpleButton2.Size = new System.Drawing.Size(75, 23);
-            simpleButton2.TabIndex = 1;
-            simpleButton2.Text = "Товары";
-            simpleButton2.Click += simpleButton2_Click;
+            btnProducts.Location = new System.Drawing.Point(93, 12);
+            btnProducts.Name = "btnProducts";
+            btnProducts.Size = new System.Drawing.Size(75, 23);
+            btnProducts.TabIndex = 1;
+            btnProducts.Text = "Товары";
+            btnProducts.Click += btnProducts_Click;
             // 
-            // simpleButton3
+            // btnOrders
             // 
-            simpleButton3.Location = new System.Drawing.Point(174, 12);
-            simpleButton3.Name = "simpleButton3";
-            simpleButton3.Size = new System.Drawing.Size(75, 23);
-            simpleButton3.TabIndex = 2;
-            simpleButton3.Text = "Покупки";
-            simpleButton3.Click += simpleButton3_Click;
+            btnOrders.Location = new System.Drawing.Point(174, 12);
+            btnOrders.Name = "btnOrders";
+            btnOrders.Size = new System.Drawing.Size(75, 23);
+            btnOrders.TabIndex = 2;
+            btnOrders.Text = "Покупки";
+            btnOrders.Click += btnOrders_Click;
             // 
             // panelControl1
             // 
-            panelControl1.Controls.Add(simpleButton3);
-            panelControl1.Controls.Add(simpleButton1);
-            panelControl1.Controls.Add(simpleButton2);
+            panelControl1.Controls.Add(btnOrders);
+            panelControl1.Controls.Add(btnCustomers);
+            panelControl1.Controls.Add(btnProducts);
             panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             panelControl1.Location = new System.Drawing.Point(0, 0);
             panelControl1.Name = "panelControl1";
@@ -84,15 +84,15 @@
             panelControl2.Size = new System.Drawing.Size(632, 232);
             panelControl2.TabIndex = 4;
             // 
-            // Form1
+            // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(632, 278);
             Controls.Add(panelControl2);
             Controls.Add(panelControl1);
-            Name = "Form1";
-            Text = "Form1";
+            Name = "MainForm";
+            Text = "Главное окно";
             ((System.ComponentModel.ISupportInitialize)panelControl1).EndInit();
             panelControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)panelControl2).EndInit();
@@ -101,9 +101,9 @@
 
         #endregion
 
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
-        private DevExpress.XtraEditors.SimpleButton simpleButton2;
-        private DevExpress.XtraEditors.SimpleButton simpleButton3;
+        private DevExpress.XtraEditors.SimpleButton btnCustomers;
+        private DevExpress.XtraEditors.SimpleButton btnProducts;
+        private DevExpress.XtraEditors.SimpleButton btnOrders;
         private DevExpress.XtraEditors.PanelControl panelControl1;
         private DevExpress.XtraEditors.PanelControl panelControl2;
     }

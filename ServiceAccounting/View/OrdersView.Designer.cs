@@ -1,6 +1,6 @@
 ﻿namespace ServiceAccounting.View
 {
-    partial class PurchasesView
+    partial class OrdersView
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraPivotGrid.DataSourceColumnBinding dataSourceColumnBinding1 = new DevExpress.XtraPivotGrid.DataSourceColumnBinding();
+            DevExpress.XtraPivotGrid.DataSourceColumnBinding dataSourceColumnBinding2 = new DevExpress.XtraPivotGrid.DataSourceColumnBinding();
             panelControl1 = new DevExpress.XtraEditors.PanelControl();
             pivotGridControl1 = new DevExpress.XtraPivotGrid.PivotGridControl();
             pivotGridField2 = new DevExpress.XtraPivotGrid.PivotGridField();
@@ -37,8 +37,8 @@
             panelControl2 = new DevExpress.XtraEditors.PanelControl();
             gridLookUpEdit1 = new DevExpress.XtraEditors.GridLookUpEdit();
             gridLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
-            simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-            simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+            btnReport = new DevExpress.XtraEditors.SimpleButton();
+            btnAddOrder = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)panelControl1).BeginInit();
             panelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pivotGridControl1).BeginInit();
@@ -59,7 +59,6 @@
             // 
             // pivotGridControl1
             // 
-            pivotGridControl1.DesignTimeDataObjectType = typeof(ApplicationContext.CompanyProductsGroup);
             pivotGridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             pivotGridControl1.Fields.AddRange(new DevExpress.XtraPivotGrid.PivotGridField[] { pivotGridField2, pivotGridField1, pivotGridField3 });
             pivotGridControl1.Location = new System.Drawing.Point(2, 2);
@@ -78,7 +77,7 @@
             // 
             pivotGridField1.Area = DevExpress.XtraPivotGrid.PivotArea.ColumnArea;
             pivotGridField1.AreaIndex = 0;
-            pivotGridField1.DataBinding = dataSourceColumnBinding1;
+            pivotGridField1.DataBinding = dataSourceColumnBinding2;
             pivotGridField1.Name = "pivotGridField1";
             // 
             // pivotGridField3
@@ -90,8 +89,8 @@
             // panelControl2
             // 
             panelControl2.Controls.Add(gridLookUpEdit1);
-            panelControl2.Controls.Add(simpleButton2);
-            panelControl2.Controls.Add(simpleButton1);
+            panelControl2.Controls.Add(btnReport);
+            panelControl2.Controls.Add(btnAddOrder);
             panelControl2.Dock = System.Windows.Forms.DockStyle.Bottom;
             panelControl2.Location = new System.Drawing.Point(0, 463);
             panelControl2.Name = "panelControl2";
@@ -117,31 +116,31 @@
             gridLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
             gridLookUpEdit1View.OptionsView.ShowGroupPanel = false;
             // 
-            // simpleButton2
+            // btnReport
             // 
-            simpleButton2.Location = new System.Drawing.Point(86, 41);
-            simpleButton2.Name = "simpleButton2";
-            simpleButton2.Size = new System.Drawing.Size(75, 23);
-            simpleButton2.TabIndex = 1;
-            simpleButton2.Text = "Отчет";
-            simpleButton2.Click += simpleButton2_Click;
+            btnReport.Location = new System.Drawing.Point(86, 41);
+            btnReport.Name = "btnReport";
+            btnReport.Size = new System.Drawing.Size(75, 23);
+            btnReport.TabIndex = 1;
+            btnReport.Text = "Отчет";
+            btnReport.Click += BtnReport_Click;
             // 
-            // simpleButton1
+            // btnAddOrder
             // 
-            simpleButton1.Location = new System.Drawing.Point(5, 41);
-            simpleButton1.Name = "simpleButton1";
-            simpleButton1.Size = new System.Drawing.Size(75, 23);
-            simpleButton1.TabIndex = 0;
-            simpleButton1.Text = "Добавить";
-            simpleButton1.Click += simpleButton1_Click;
+            btnAddOrder.Location = new System.Drawing.Point(5, 41);
+            btnAddOrder.Name = "btnAddOrder";
+            btnAddOrder.Size = new System.Drawing.Size(75, 23);
+            btnAddOrder.TabIndex = 0;
+            btnAddOrder.Text = "Добавить";
+            btnAddOrder.Click += BtnAddOrder_Click;
             // 
-            // PurchasesView
+            // OrdersView
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(panelControl1);
             Controls.Add(panelControl2);
-            Name = "PurchasesView";
+            Name = "OrdersView";
             Size = new System.Drawing.Size(1037, 616);
             ((System.ComponentModel.ISupportInitialize)panelControl1).EndInit();
             panelControl1.ResumeLayout(false);
@@ -157,8 +156,8 @@
 
         private DevExpress.XtraEditors.PanelControl panelControl1;
         private DevExpress.XtraEditors.PanelControl panelControl2;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
-        private DevExpress.XtraEditors.SimpleButton simpleButton2;
+        private DevExpress.XtraEditors.SimpleButton btnAddOrder;
+        private DevExpress.XtraEditors.SimpleButton btnReport;
         private DevExpress.XtraPivotGrid.PivotGridControl pivotGridControl1;
         private DevExpress.XtraPivotGrid.PivotGridField pivotGridField2;
         private DevExpress.XtraPivotGrid.PivotGridField pivotGridField1;

@@ -1,12 +1,12 @@
-﻿using System;
+﻿using ServiceAccounting.View.ViewEventArgs;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServiceAccounting.View.Base;
 
-public interface ICustomersView
+public interface ICustomersView : IView
 {
-    public event EventHandler Load;
+    event EventHandler ViewLoaded;
+    event EventHandler<BtnAddCustomerClickedEventArgs> btnAddCustomerClicked;
+    void UpdateView(IEnumerable<object> data);
 }

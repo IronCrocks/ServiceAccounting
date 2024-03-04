@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiceAccounting.Model.Services.Base;
 
-internal interface IPurchasesService : IService
+public interface IProductsService : IService
 {
+    public void SaveChanges();
 }

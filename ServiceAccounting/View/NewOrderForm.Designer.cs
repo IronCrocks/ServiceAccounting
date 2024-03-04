@@ -1,6 +1,6 @@
 ﻿namespace ServiceAccounting.View
 {
-    partial class NewPurchaseForm
+    partial class NewOrderForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewPurchaseForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewOrderForm));
             panelControl2 = new DevExpress.XtraEditors.PanelControl();
-            simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-            simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+            btnCancel = new DevExpress.XtraEditors.SimpleButton();
+            btnAddOrder = new DevExpress.XtraEditors.SimpleButton();
             dateEdit1 = new DevExpress.XtraEditors.DateEdit();
             gridLookUpEdit1 = new DevExpress.XtraEditors.GridLookUpEdit();
             gridLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
             panelControl3 = new DevExpress.XtraEditors.PanelControl();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
-            simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
-            simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
+            btnAddOrderItem = new DevExpress.XtraEditors.SimpleButton();
+            btnRemoveOrderItem = new DevExpress.XtraEditors.SimpleButton();
             panelControl1 = new DevExpress.XtraEditors.PanelControl();
             gridControl2 = new DevExpress.XtraGrid.GridControl();
             gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -63,31 +63,31 @@
             // 
             // panelControl2
             // 
-            panelControl2.Controls.Add(simpleButton2);
-            panelControl2.Controls.Add(simpleButton1);
+            panelControl2.Controls.Add(btnCancel);
+            panelControl2.Controls.Add(btnAddOrder);
             panelControl2.Dock = System.Windows.Forms.DockStyle.Bottom;
             panelControl2.Location = new System.Drawing.Point(0, 439);
             panelControl2.Name = "panelControl2";
             panelControl2.Size = new System.Drawing.Size(810, 58);
             panelControl2.TabIndex = 1;
             // 
-            // simpleButton2
+            // btnCancel
             // 
-            simpleButton2.Location = new System.Drawing.Point(478, 23);
-            simpleButton2.Name = "simpleButton2";
-            simpleButton2.Size = new System.Drawing.Size(75, 23);
-            simpleButton2.TabIndex = 3;
-            simpleButton2.Text = "Отмена";
-            simpleButton2.Click += simpleButton2_Click;
+            btnCancel.Location = new System.Drawing.Point(478, 23);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new System.Drawing.Size(75, 23);
+            btnCancel.TabIndex = 3;
+            btnCancel.Text = "Отмена";
+            btnCancel.Click += BtnCancel_Click;
             // 
-            // simpleButton1
+            // btnAddOrder
             // 
-            simpleButton1.Location = new System.Drawing.Point(165, 23);
-            simpleButton1.Name = "simpleButton1";
-            simpleButton1.Size = new System.Drawing.Size(75, 23);
-            simpleButton1.TabIndex = 2;
-            simpleButton1.Text = "Добавить";
-            simpleButton1.Click += simpleButton1_Click;
+            btnAddOrder.Location = new System.Drawing.Point(165, 23);
+            btnAddOrder.Name = "btnAddOrder";
+            btnAddOrder.Size = new System.Drawing.Size(75, 23);
+            btnAddOrder.TabIndex = 2;
+            btnAddOrder.Text = "Добавить";
+            btnAddOrder.Click += BtnAddOrder_Click;
             // 
             // dateEdit1
             // 
@@ -148,30 +148,30 @@
             label1.TabIndex = 4;
             label1.Text = "Покупатель";
             // 
-            // simpleButton3
+            // btnAddOrderItem
             // 
-            simpleButton3.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("simpleButton3.ImageOptions.Image");
-            simpleButton3.Location = new System.Drawing.Point(245, 151);
-            simpleButton3.Name = "simpleButton3";
-            simpleButton3.Size = new System.Drawing.Size(37, 36);
-            simpleButton3.TabIndex = 2;
-            simpleButton3.Click += simpleButton3_Click;
+            btnAddOrderItem.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnAddOrderItem.ImageOptions.Image");
+            btnAddOrderItem.Location = new System.Drawing.Point(245, 151);
+            btnAddOrderItem.Name = "btnAddOrderItem";
+            btnAddOrderItem.Size = new System.Drawing.Size(37, 36);
+            btnAddOrderItem.TabIndex = 2;
+            btnAddOrderItem.Click += BtnAddOrderItem_Click;
             // 
-            // simpleButton4
+            // btnRemoveOrderItem
             // 
-            simpleButton4.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("simpleButton4.ImageOptions.Image");
-            simpleButton4.Location = new System.Drawing.Point(414, 151);
-            simpleButton4.Name = "simpleButton4";
-            simpleButton4.Size = new System.Drawing.Size(37, 36);
-            simpleButton4.TabIndex = 3;
-            simpleButton4.Click += simpleButton4_Click;
+            btnRemoveOrderItem.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnRemoveOrderItem.ImageOptions.Image");
+            btnRemoveOrderItem.Location = new System.Drawing.Point(414, 151);
+            btnRemoveOrderItem.Name = "btnRemoveOrderItem";
+            btnRemoveOrderItem.Size = new System.Drawing.Size(37, 36);
+            btnRemoveOrderItem.TabIndex = 3;
+            btnRemoveOrderItem.Click += BtnRemoveOrderItem_Click;
             // 
             // panelControl1
             // 
             panelControl1.Controls.Add(gridControl2);
             panelControl1.Controls.Add(gridControl1);
-            panelControl1.Controls.Add(simpleButton4);
-            panelControl1.Controls.Add(simpleButton3);
+            panelControl1.Controls.Add(btnRemoveOrderItem);
+            panelControl1.Controls.Add(btnAddOrderItem);
             panelControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             panelControl1.Location = new System.Drawing.Point(0, 100);
             panelControl1.Name = "panelControl1";
@@ -211,7 +211,7 @@
             gridView1.Name = "gridView1";
             gridView1.OptionsView.ShowGroupPanel = false;
             // 
-            // NewPurchaseForm
+            // NewOrderForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -219,8 +219,8 @@
             Controls.Add(panelControl1);
             Controls.Add(panelControl3);
             Controls.Add(panelControl2);
-            Name = "NewPurchaseForm";
-            Text = "NewPurchaseForm";
+            Name = "NewOrderForm";
+            Text = "Форма добавления заказа";
             ((System.ComponentModel.ISupportInitialize)panelControl2).EndInit();
             panelControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dateEdit1.Properties.CalendarTimeProperties).EndInit();
@@ -241,16 +241,16 @@
 
         #endregion
         private DevExpress.XtraEditors.PanelControl panelControl2;
-        private DevExpress.XtraEditors.SimpleButton simpleButton2;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.SimpleButton btnCancel;
+        private DevExpress.XtraEditors.SimpleButton btnAddOrder;
         private DevExpress.XtraEditors.DateEdit dateEdit1;
         private DevExpress.XtraEditors.GridLookUpEdit gridLookUpEdit1;
         private DevExpress.XtraGrid.Views.Grid.GridView gridLookUpEdit1View;
         private DevExpress.XtraEditors.PanelControl panelControl3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private DevExpress.XtraEditors.SimpleButton simpleButton3;
-        private DevExpress.XtraEditors.SimpleButton simpleButton4;
+        private DevExpress.XtraEditors.SimpleButton btnAddOrderItem;
+        private DevExpress.XtraEditors.SimpleButton btnRemoveOrderItem;
         private DevExpress.XtraEditors.PanelControl panelControl1;
         private DevExpress.XtraGrid.GridControl gridControl2;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView2;

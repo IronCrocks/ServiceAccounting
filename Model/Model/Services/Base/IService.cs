@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceAccounting.View.Base
+namespace ServiceAccounting.Model.Services.Base;
+
+public interface IService
 {
-    internal interface IPurchasesView
-    {
-    }
 }

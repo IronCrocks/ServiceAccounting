@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.EntityFrameworkCore;
+using ServiceAccounting.View.Base;
 
 namespace ServiceAccounting.View
 {
-    public partial class ProductsView : UserControl
+    public partial class ProductsView : UserControl, IProductsView
     {
         ApplicationContext _dbContext;
         public ProductsView()
@@ -28,14 +22,33 @@ namespace ServiceAccounting.View
             }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
         }
 
+        public event EventHandler RowUpdated;
+        public event EventHandler RowDeleted;
+        public event EventHandler ViewLoaded;
+
+        protected virtual void OnRowUpdated(object sender, EventArgs e)
+        {
+            RowUpdated?.Invoke(sender, e);
+        }
+
+        protected virtual void OnRowDeleted(object sender, EventArgs e)
+        {
+            RowDeleted?.Invoke(sender, e);
+        }
+
+        protected virtual void OnViewLoaded(object sender, EventArgs e)
+        {
+            ViewLoaded?.Invoke(sender, e);
+        }
+
         private void gridView1_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
         {
-            _dbContext.SaveChanges();
+            OnRowUpdated(this, EventArgs.Empty);
         }
 
         private void gridView1_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
         {
-            _dbContext.SaveChanges();
+            OnRowDeleted(this, EventArgs.Empty);
         }
     }
 }

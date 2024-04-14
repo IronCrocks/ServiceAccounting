@@ -1,9 +1,7 @@
-﻿using ServiceAccounting.Model.Services;
-using ServiceAccounting.Presenter;
-using ServiceAccounting.View;
-using ServiceAccounting.View.Base;
+﻿using ServiceAccounting.View;
 using System;
 using System.Windows.Forms;
+using View.Base;
 
 namespace ServiceAccounting;
 
@@ -26,8 +24,6 @@ public partial class MainForm : DevExpress.XtraEditors.XtraForm
         _view = _customersView;
         _view.Parent = panelControl2;
         _view.Dock = DockStyle.Fill;
-
-        var _customersPresenter = new CustomersPresenter((ICustomersView)_customersView,new CustomersService());
     }
 
     private void btnProducts_Click(object sender, EventArgs e)

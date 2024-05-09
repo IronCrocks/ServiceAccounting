@@ -8,7 +8,7 @@ public class CustomersService : ICustomersService
 {
     public IEnumerable<object> GetCustomers()
     {
-        using var dbContext = new ApplicationContext();
+        using var dbContext = new ApplicationDBContext();
         var result = from customer in dbContext.Customers
                      join order in dbContext.Orders on customer.Id equals order.CustomerId into customersOrders
                      from customerOrders in customersOrders.DefaultIfEmpty()
@@ -28,14 +28,14 @@ public class CustomersService : ICustomersService
 
     public void AddCustomer(string name, int age)
     {
-        using var dbContext = new ApplicationContext();
+        using var dbContext = new ApplicationDBContext();
         dbContext.Customers.Add(new Customer { Name = name, Age = age });
         dbContext.SaveChanges();
     }
 
     public Customer GetCustomer(int id)
     {
-        using var dbContext = new ApplicationContext();
+        using var dbContext = new ApplicationDBContext();
         return dbContext.Customers.FirstOrDefault(p => p.Id == id);
     }
 }

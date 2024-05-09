@@ -1,5 +1,8 @@
-﻿using Model.Services.Base;
+﻿using DevExpress.Xpo;
+using Model.Data;
+using Model.Services.Base;
 using View.Base;
+using View.ViewEventArgs;
 
 namespace Presenter;
 
@@ -15,23 +18,32 @@ public class ProductsPresenter : IPresenter
 
         _productsView.ViewLoaded += ProductsView_ViewLoaded;
         _productsView.RowUpdated += ProductsView_RowUpdated;
-        _productsView.RowDeleted += ProductsView_RowDeleted;
+        _productsView.RowRemoved += ProductsView_RowRemoved;
+        _productsView.RowInserted += ProductsView_RowInserted;
+    }
+
+    private void ProductsView_RowInserted(object? sender, EventArgs e)
+    {
+        var product = _productsService.AddDefaultProduct();
+        _productsView.Products.Add(product);
+        _productsView.UpdateView();
     }
 
     private void ProductsView_ViewLoaded(object? sender, EventArgs e)
     {
-        var data = _productsService.Load();
-        _productsView.UpdateView(data);
+        var data = _productsService.GetProducts();
+        _productsView.LoadData(data);
     }
 
-    private void ProductsView_RowDeleted(object? sender, EventArgs e)
+    private void ProductsView_RowRemoved(object? sender, RowRemovedEventArgs e)
     {
-        _productsService.SaveChanges();
+        _productsService.RemoveProduct(e.Index);
     }
 
-    private void ProductsView_RowUpdated(object? sender, EventArgs e)
+    private void ProductsView_RowUpdated(object? sender, ObjectUpdatedEventArgs e)
     {
-        _productsService.SaveChanges();
+        var changedProduct = e.UpdatedObject as Product;
+        _productsService.ChangeProduct(changedProduct);
     }
 }
 

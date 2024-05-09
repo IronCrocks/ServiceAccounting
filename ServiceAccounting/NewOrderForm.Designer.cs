@@ -104,7 +104,6 @@
             gridLookUpEdit1.Location = new System.Drawing.Point(335, 24);
             gridLookUpEdit1.Name = "gridLookUpEdit1";
             gridLookUpEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            //gridLookUpEdit1.Properties.DataSource = typeof(Model.Customer);
             gridLookUpEdit1.Properties.DisplayMember = "Name";
             gridLookUpEdit1.Properties.PopupView = gridLookUpEdit1View;
             gridLookUpEdit1.Properties.ValueMember = "Id";
@@ -192,11 +191,11 @@
             // 
             gridView2.GridControl = gridControl2;
             gridView2.Name = "gridView2";
+            gridView2.OptionsBehavior.Editable = false;
             gridView2.OptionsView.ShowGroupPanel = false;
             // 
             // gridControl1
             // 
-            //gridControl1.DataSource = typeof(Model.Product);
             gridControl1.Dock = System.Windows.Forms.DockStyle.Top;
             gridControl1.Location = new System.Drawing.Point(2, 2);
             gridControl1.MainView = gridView1;
@@ -209,6 +208,7 @@
             // 
             gridView1.GridControl = gridControl1;
             gridView1.Name = "gridView1";
+            gridView1.OptionsBehavior.Editable = false;
             gridView1.OptionsView.ShowGroupPanel = false;
             // 
             // NewOrderForm

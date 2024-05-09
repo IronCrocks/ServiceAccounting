@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using View.Base;
 using View.ViewEventArgs;
@@ -14,8 +13,8 @@ namespace ServiceAccounting.View
         public NewOrderForm()
         {
             InitializeComponent();
-            gridControl2.DataSource = _products;
-            OnViewLoaded(this, EventArgs.Empty);
+            var bindingSource = new BindingSource { DataSource = _products };
+            gridControl2.DataSource = bindingSource;
         }
 
         public event EventHandler<AddOrderEventArgs> BtnAddOrderClicked;
@@ -115,10 +114,18 @@ namespace ServiceAccounting.View
         //    Date = dateEdit1.DateTime,
         //};
 
-        public void UpdateView(IEnumerable<object> products, IEnumerable<object> customers)
+        public void UpdateView(IEnumerable<object> customers, IEnumerable<object> products)
         {
-            gridControl1.DataSource = products.ToList();
-            gridLookUpEdit1.Properties.DataSource = customers.ToList();
+            var bindingSourceCustomers = new BindingSource { DataSource = customers };
+            var bindingSourceProducts = new BindingSource { DataSource = products };
+
+            gridControl1.DataSource = bindingSourceProducts;
+            gridLookUpEdit1.Properties.DataSource = bindingSourceCustomers;
+        }
+
+        void INewOrderView.Load()
+        {
+            OnViewLoaded(this, EventArgs.Empty);
         }
     }
 }

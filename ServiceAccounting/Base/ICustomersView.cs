@@ -8,4 +8,5 @@ public interface ICustomersView : IView
 {
     event EventHandler<AddCustomerEventArgs> btnAddCustomerClicked;
     public void UpdateView(IEnumerable<object> data);
+    void Load();
 }

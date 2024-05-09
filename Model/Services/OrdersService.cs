@@ -8,7 +8,7 @@ public class OrdersService : IOrdersService
 {
     public IEnumerable<object> GetOrders()
     {
-        using var db = new ApplicationContext();
+        using var db = new ApplicationDBContext();
 
         var result = from customer in db.Customers
                      join order in db.Orders on customer.Id equals order.CustomerId
@@ -28,7 +28,7 @@ public class OrdersService : IOrdersService
 
     public void CreateOrder(Customer customer, IEnumerable<Product> products, DateTime date)
     {
-        using var db = new ApplicationContext();
+        using var db = new ApplicationDBContext();
 
         var order = new Order { CustomerId = customer.Id, Date = date };
 

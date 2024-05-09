@@ -7,6 +7,5 @@ public class Product
     public string Description { get; set; } = string.Empty;
     public int Price { get; set; }
 
-    public List<Order> Orders { get; set; } = new List<Order>();
     public List<OrderItem> OrderItems { get; set; }
 }

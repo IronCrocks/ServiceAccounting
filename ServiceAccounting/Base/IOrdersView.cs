@@ -5,6 +5,7 @@ namespace View.Base;
 
 public interface IOrdersView : IView
 {
-    event EventHandler btnAddCustomerClicked;
+    event EventHandler btnAddOrderClicked;
     public void UpdateView(IEnumerable<object> data);
+    void Load();
 }

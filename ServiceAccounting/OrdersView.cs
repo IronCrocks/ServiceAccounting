@@ -8,14 +8,16 @@ namespace ServiceAccounting.View;
 
 public partial class OrdersView : UserControl, IOrdersView
 {
-    public OrdersView()
+    private readonly INewOrderView _newOrderForm;
+
+    public OrdersView(INewOrderView newOrderForm)
     {
         InitializeComponent();
-        OnViewLoaded(EventArgs.Empty);
+        _newOrderForm = newOrderForm ?? throw new ArgumentNullException(nameof(newOrderForm));
     }
 
     public event EventHandler ViewLoaded;
-    public event EventHandler btnAddCustomerClicked;
+    public event EventHandler btnAddOrderClicked;
 
     public void UpdateView(IEnumerable<object> orders)
     {
@@ -24,14 +26,14 @@ public partial class OrdersView : UserControl, IOrdersView
         UpdatePivotGrid();
     }
 
-    protected virtual void OnViewLoaded(EventArgs e)
+    protected virtual void OnViewLoaded(object sender, EventArgs e)
     {
-        ViewLoaded?.Invoke(this, e);
+        ViewLoaded?.Invoke(sender, e);
     }
 
-    protected virtual void OnBtnAddCustomerClicked(EventArgs e)
+    protected virtual void OnBtnAddOrderClicked(object sender, EventArgs e)
     {
-        btnAddCustomerClicked?.Invoke(this, e);
+        btnAddOrderClicked?.Invoke(sender, e);
     }
 
     private void UpdatePivotGrid()
@@ -49,10 +51,11 @@ public partial class OrdersView : UserControl, IOrdersView
 
     private void BtnAddOrder_Click(object sender, EventArgs e)
     {
-        var form = new NewOrderForm();
+        _newOrderForm.Load();
+        var form = _newOrderForm as NewOrderForm;
         form.ShowDialog();
-
-        OnBtnAddCustomerClicked(EventArgs.Empty);
+        //form.Show();
+        OnBtnAddOrderClicked(this, EventArgs.Empty);
     }
 
     private void BtnReport_Click(object sender, EventArgs e)
@@ -86,5 +89,10 @@ public partial class OrdersView : UserControl, IOrdersView
 
         //string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "report.docx");
         //report4.ExportToDocx(path);
+    }
+
+    void IOrdersView.Load()
+    {
+        OnViewLoaded(this, EventArgs.Empty);
     }
 }

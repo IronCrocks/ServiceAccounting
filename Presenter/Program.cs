@@ -1,4 +1,7 @@
-﻿using System.Windows.Forms;
+﻿using Model.Services;
+using Presenter;
+using ServiceAccounting.View;
+using System.Windows.Forms;
 
 namespace ServiceAccounting;
 
@@ -10,7 +13,7 @@ internal static class Program
     [STAThread]
     static void Main()
     {
-        using var db = new ApplicationContext();
+        using var db = new ApplicationDBContext();
         //db.Database.EnsureDeleted();
         //db.Database.EnsureCreated();
 
@@ -29,6 +32,23 @@ internal static class Program
         //}
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
-        Application.Run(new MainForm());
+        //Application.Run(new MainForm());
+        var newOrderForm = new NewOrderForm();
+
+        var customersView = new CustomersView();
+        var productsView = new ProductsView();
+        var ordersView = new OrdersView(newOrderForm);
+
+        var customersService = new CustomersService();
+        var productsService = new ProductsService();
+        var ordersService = new OrdersService();
+
+
+        Application.Run(new MainFormPresenter(new MainForm(customersView, productsView, ordersView),
+            new NewOrderPresenter(newOrderForm, ordersService, customersService, productsService),
+            new OrdersPresenter(ordersView, ordersService),
+            new ProductsPresenter(productsView, productsService),
+            new CustomersPresenter(customersView, customersService)));
+        //presenter.Run();
     }
 }

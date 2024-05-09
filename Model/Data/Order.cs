@@ -9,7 +9,6 @@ public class Order
     public string Number { get; set; }
     public DateTime Date { get; set; } = DateTime.Now;
 
-    public List<Product> Products { get; set; } = new List<Product>();
     public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
     public Customer? Customer { get; set; }

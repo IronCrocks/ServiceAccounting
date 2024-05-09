@@ -9,12 +9,14 @@ public class NewOrderPresenter
     private readonly INewOrderView _newOrderView;
     private readonly IOrdersService _ordersService;
     private readonly ICustomersService _customersService;
+    private readonly IProductsService _productsService;
 
-    public NewOrderPresenter(INewOrderView newOrderView, IOrdersService ordersService, ICustomersService customersService)
+    public NewOrderPresenter(INewOrderView newOrderView, IOrdersService ordersService, ICustomersService customersService, IProductsService productsService)
     {
         _newOrderView = newOrderView ?? throw new ArgumentNullException(nameof(newOrderView));
         _ordersService = ordersService ?? throw new ArgumentNullException(nameof(ordersService));
         _customersService = customersService ?? throw new ArgumentNullException(nameof(customersService));
+        _productsService = productsService ?? throw new ArgumentNullException(nameof(productsService));
 
         _newOrderView.ViewLoaded += NewOrderView_ViewLoaded;
         _newOrderView.BtnAddOrderClicked += NewOrderView_BtnAddOrderClicked;
@@ -33,8 +35,8 @@ public class NewOrderPresenter
     private void NewOrderView_ViewLoaded(object? sender, EventArgs e)
     {
         var customers = _customersService.GetCustomers();
-        var orders = _ordersService.GetOrders();
+        var products = _productsService.GetProducts();
 
-        _newOrderView.UpdateView(customers, orders);
+        _newOrderView.UpdateView(customers, products);
     }
 }

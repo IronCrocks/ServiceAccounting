@@ -14,10 +14,10 @@ public class OrdersPresenter
         _ordersService = ordersService ?? throw new ArgumentNullException(nameof(ordersService));
 
         _ordersView.ViewLoaded += OrdersView_ViewLoaded;
-        _ordersView.btnAddCustomerClicked += OrdersView_btnAddCustomerClicked;
+        _ordersView.btnAddOrderClicked += OrdersView_btnAddOrderClicked;
     }
 
-    private void OrdersView_btnAddCustomerClicked(object? sender, EventArgs e)
+    private void OrdersView_btnAddOrderClicked(object? sender, EventArgs e)
     {
         UpdateViewData();
     }

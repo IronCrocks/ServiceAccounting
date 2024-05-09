@@ -12,7 +12,7 @@ namespace ServiceAccounting.View
         {
             InitializeComponent();
 
-            OnViewLoaded(EventArgs.Empty);
+            OnViewLoaded(this, EventArgs.Empty);
         }
 
         public event EventHandler ViewLoaded;
@@ -24,23 +24,28 @@ namespace ServiceAccounting.View
             gridControl1.DataSource = bindingSource;
         }
 
-        protected virtual void OnViewLoaded(EventArgs e)
+        protected virtual void OnViewLoaded(object sender, EventArgs e)
         {
-            ViewLoaded?.Invoke(this, e);
+            ViewLoaded?.Invoke(sender, e);
         }
 
-        protected virtual void OnBtnAddCustomerClicked(AddCustomerEventArgs e)
+        protected virtual void OnBtnAddCustomerClicked(object sender, AddCustomerEventArgs e)
         {
-            btnAddCustomerClicked?.Invoke(this, e);
+            btnAddCustomerClicked?.Invoke(sender, e);
         }
 
         private void btnAddCustomer_Click(object sender, EventArgs e)
         {
-            OnBtnAddCustomerClicked(new AddCustomerEventArgs
+            OnBtnAddCustomerClicked(this, new AddCustomerEventArgs
             {
                 Name = textEdit1.Text,
                 Age = Convert.ToInt32(textEdit2.Text)
             });
+        }
+
+        void ICustomersView.Load()
+        {
+            OnViewLoaded(this, EventArgs.Empty);
         }
     }
 }

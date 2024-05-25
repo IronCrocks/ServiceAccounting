@@ -17,8 +17,32 @@ namespace ServiceAccounting.View
             gridControl2.DataSource = bindingSource;
         }
 
+        public event EventHandler<AddOrderItemEventArgs> OrderItemAdded;
         public event EventHandler<AddOrderEventArgs> BtnAddOrderClicked;
         public event EventHandler ViewLoaded;
+
+        // TODO: переписать так, чтобы при добавлении одинакового товара, не создавались новые ордер итемы с уже
+        // добавленным товаром, вместо этого увеличивался счетчик данного товара в соответствующем ордер итеме.
+        public void AddOrderItem(object item)
+        {
+            _products.Add(item);
+            gridControl2.BeginUpdate();
+            gridControl2.EndUpdate();
+        }
+
+        public void UpdateView(IEnumerable<object> customers, IEnumerable<object> products)
+        {
+            var bindingSourceCustomers = new BindingSource { DataSource = customers };
+            var bindingSourceProducts = new BindingSource { DataSource = products };
+
+            gridControl1.DataSource = bindingSourceProducts;
+            gridLookUpEdit1.Properties.DataSource = bindingSourceCustomers;
+        }
+
+        protected virtual void OnOrderItemAdded(object sender, AddOrderItemEventArgs e)
+        {
+            OrderItemAdded?.Invoke(this, e);
+        }
 
         protected virtual void OnViewLoaded(object sender, EventArgs e)
         {
@@ -33,10 +57,7 @@ namespace ServiceAccounting.View
         private void BtnAddOrderItem_Click(object sender, EventArgs e)
         {
             var selectedRow = gridView1.GetFocusedRow();
-
-            _products.Add(selectedRow);
-            gridControl2.BeginUpdate();
-            gridControl2.EndUpdate();
+            OnOrderItemAdded(this, new AddOrderItemEventArgs(selectedRow, 1));
         }
 
         private void BtnRemoveOrderItem_Click(object sender, EventArgs e)
@@ -113,15 +134,6 @@ namespace ServiceAccounting.View
         //    Number = "",
         //    Date = dateEdit1.DateTime,
         //};
-
-        public void UpdateView(IEnumerable<object> customers, IEnumerable<object> products)
-        {
-            var bindingSourceCustomers = new BindingSource { DataSource = customers };
-            var bindingSourceProducts = new BindingSource { DataSource = products };
-
-            gridControl1.DataSource = bindingSourceProducts;
-            gridLookUpEdit1.Properties.DataSource = bindingSourceCustomers;
-        }
 
         void INewOrderView.Load()
         {

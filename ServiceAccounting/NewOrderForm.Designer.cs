@@ -220,7 +220,7 @@
             Controls.Add(panelControl3);
             Controls.Add(panelControl2);
             Name = "NewOrderForm";
-            Text = "Форма добавления заказа";
+            Text = "Новый заказ";
             ((System.ComponentModel.ISupportInitialize)panelControl2).EndInit();
             panelControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dateEdit1.Properties.CalendarTimeProperties).EndInit();

@@ -20,6 +20,16 @@ public class NewOrderPresenter
 
         _newOrderView.ViewLoaded += NewOrderView_ViewLoaded;
         _newOrderView.BtnAddOrderClicked += NewOrderView_BtnAddOrderClicked;
+        _newOrderView.OrderItemAdded += NewOrderView_OrderItemAdded;
+    }
+
+    private void NewOrderView_OrderItemAdded(object? sender, View.ViewEventArgs.AddOrderItemEventArgs e)
+    {
+        var product = e.Product as Product ??
+            throw new InvalidOperationException($"Невозможно привести {e.Product} к типу {nameof(Product)}");
+
+        var orderItem = _ordersService.CreateOrderItem(product, e.Count);
+        _newOrderView.AddOrderItem(orderItem);
     }
 
     private void NewOrderView_BtnAddOrderClicked(object? sender, View.ViewEventArgs.AddOrderEventArgs e)

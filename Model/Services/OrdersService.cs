@@ -46,5 +46,11 @@ public class OrdersService : IOrdersService
         db.Orders.Add(order);
         db.SaveChanges();
     }
+
+    public OrderItem CreateOrderItem(Product product, int count)
+    {
+        OrderItem t = new() { Product = product, Count = count };
+        return t;
+    }
 }
 

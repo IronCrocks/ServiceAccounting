@@ -6,7 +6,7 @@ namespace Model.Services;
 
 public class CustomersService : ICustomersService
 {
-    public IEnumerable<object> GetCustomers()
+    public IEnumerable<(int Id, string Name, int Age, int TotalSum)> GetCustomers()
     {
         using var dbContext = new ApplicationDBContext();
         var result = from customer in dbContext.Customers
@@ -16,27 +16,42 @@ public class CustomersService : ICustomersService
                      from orderItemCustomer in orderItemsCustomers.DefaultIfEmpty()
                      join product in dbContext.Products on orderItemCustomer.ProductId equals product.Id into gs
                      from g in gs.DefaultIfEmpty()
-                     group (g.Price * orderItemCustomer.Count) by new { customer.Name, customer.Age } into x
-                     select new
-                     {
+                     group (g.Price * orderItemCustomer.Count) by new { customer.Id, customer.Name, customer.Age } into x
+                     select new ValueTuple<int, string, int, int>
+                     (
+                         x.Key.Id,
                          x.Key.Name,
                          x.Key.Age,
-                         TotalSum = x.Sum()
-                     };
+                         x.Sum()
+                     );
         return result.ToList();
     }
 
-    public void AddCustomer(string name, int age)
+    public Customer GetCustomerById(int id)
     {
         using var dbContext = new ApplicationDBContext();
-        dbContext.Customers.Add(new Customer { Name = name, Age = age });
+        return dbContext.Customers.Find(id);
+    }
+
+    public void AddCustomer(Customer customer)
+    {
+        using var dbContext = new ApplicationDBContext();
+        dbContext.Customers.Add(customer);
         dbContext.SaveChanges();
     }
 
-    public Customer GetCustomer(int id)
+    public void DeleteCustomer(Customer customer)
     {
         using var dbContext = new ApplicationDBContext();
-        return dbContext.Customers.FirstOrDefault(p => p.Id == id);
+        dbContext.Customers.Remove(customer);
+        dbContext.SaveChanges();
+    }
+
+    public void UpdateCustomer(Customer customer)
+    {
+        using var dbContext = new ApplicationDBContext();
+        dbContext.Customers.Update(customer);
+        dbContext.SaveChanges();
     }
 }
 

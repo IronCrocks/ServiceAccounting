@@ -4,7 +4,9 @@ namespace Model.Services.Base;
 
 public interface ICustomersService : IService
 {
-    void AddCustomer(string name, int age);
-    Customer GetCustomer(int id);
-    IEnumerable<object> GetCustomers();
+    void AddCustomer(Customer customer);
+    void DeleteCustomer(Customer customer);
+    void UpdateCustomer(Customer customer);
+    Customer GetCustomerById(int id);
+    IEnumerable<(int Id, string Name, int Age, int TotalSum)> GetCustomers();
 }

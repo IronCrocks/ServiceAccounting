@@ -1,4 +1,7 @@
-﻿using Model.Services.Base;
+﻿using DTO;
+using Model.Data;
+using Model.Services.Base;
+using System.ComponentModel;
 using View.Base;
 using View.ViewEventArgs;
 
@@ -15,24 +18,47 @@ public class CustomersPresenter
         _customersService = customersService ?? throw new ArgumentNullException(nameof(customersService));
 
         _customersView.ViewLoaded += CustomersView_ViewLoaded;
-        _customersView.btnAddCustomerClicked += CustomersView_btnAddCustomerClicked;
+        _customersView.CustomerAdded += CustomersView_CustomerAdded;
+        _customersView.CustomerDeleted += CustomersView_CustomerDeleted;
+        _customersView.CustomerChanged += CustomersView_CustomerChanged;
     }
 
-    private void CustomersView_btnAddCustomerClicked(object? sender, AddCustomerEventArgs e)
+    private void CustomersView_CustomerAdded(object? sender, CustomerEventArgs e)
     {
-        _customersService.AddCustomer(e.Name, e.Age);
-        UpdateViewData();
+        var customer = CreateCustomer(e.Customer);
+        _customersService.AddCustomer(customer);
+    }
+
+    private void CustomersView_CustomerDeleted(object? sender, CustomerEventArgs e)
+    {
+        var customer = _customersService.GetCustomerById(e.Customer.Id);
+        _customersService.DeleteCustomer(customer);
+    }
+
+    private void CustomersView_CustomerChanged(object? sender, CustomerEventArgs e)
+    {
+        var customer = CreateCustomer(e.Customer);
+        _customersService.UpdateCustomer(customer);
     }
 
     private void CustomersView_ViewLoaded(object sender, EventArgs e)
     {
-        UpdateViewData();
+        LoadViewData();
     }
 
-    private void UpdateViewData()
+    private void LoadViewData()
     {
-        var data = _customersService.GetCustomers();
-        _customersView.UpdateView(data);
+        var customers = _customersService.GetCustomers();
+        var customersDTO = customers.Select(x => new CustomerDTO { Id = x.Id, Name = x.Name, Age = x.Age, TotalSum = x.TotalSum }).ToList();
+        var bindingList = new BindingList<CustomerDTO>(customersDTO);
+        _customersView.LoadCustomers(bindingList);
     }
+
+    private Customer CreateCustomer(CustomerDTO customerDTO) => new()
+    {
+        Id = customerDTO.Id,
+        Name = customerDTO.Name,
+        Age = customerDTO.Age
+    };
 }
 

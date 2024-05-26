@@ -38,7 +38,7 @@ public class NewOrderPresenter
 
         if (selectedCustomer is null) throw new ArgumentNullException(nameof(selectedCustomer));
 
-        var customer = _customersService.GetCustomer(selectedCustomer.Id);
+        var customer = _customersService.GetCustomerById(selectedCustomer.Id);
         _ordersService.CreateOrder(customer, e.Products.Cast<Product>().ToList(), e.Date);
     }
 
@@ -47,6 +47,6 @@ public class NewOrderPresenter
         var customers = _customersService.GetCustomers();
         var products = _productsService.GetProducts();
 
-        _newOrderView.UpdateView(customers, products);
+        //_newOrderView.UpdateView(customers, products);
     }
 }

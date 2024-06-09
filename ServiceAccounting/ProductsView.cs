@@ -1,6 +1,6 @@
-﻿using System;
+﻿using DTO;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using View.Base;
 using View.ViewEventArgs;
@@ -9,25 +9,63 @@ namespace ServiceAccounting.View;
 
 public partial class ProductsView : UserControl, IProductsView
 {
+    private BindingSource _bindingSource;
     public ProductsView()
     {
         InitializeComponent();
     }
 
-    public event EventHandler<ObjectUpdatedEventArgs> RowUpdated;
-    public event EventHandler<RowRemovedEventArgs> RowRemoved;
     public event EventHandler ViewLoaded;
-    public event EventHandler RowInserted;
+    public event EventHandler<ProductEventArgs> ProductAdded;
+    public event EventHandler<ProductEventArgs> ProductChanged;
+    public event EventHandler<ProductEventArgs> ProductDeleted;
 
-    public void LoadData(IEnumerable<object> objects)
+    public void LoadData(IEnumerable<ProductDTO> products)
     {
-        Products = objects.ToList();
-        var bindingSource = new BindingSource() { DataSource = Products };
-        gridControl1.DataSource = bindingSource;
+        _bindingSource = new BindingSource() { DataSource = products };
+        gridControl1.DataSource = _bindingSource;
+        _bindingSource.ListChanged += BindingSource_ListChanged;
+        gridView1.RowDeleted += GridView1_RowDeleted;
     }
 
-    /// TODO: сделать приватным с открытыми методами доступа. Либо взять неизменяемый список. 
-    public List<object> Products { get; set; } = new List<object>();
+    protected virtual void OnProductAdded(ProductEventArgs e)
+    {
+        ProductAdded?.Invoke(this, e);
+    }
+
+    protected virtual void OnProductChanged(ProductEventArgs e)
+    {
+        ProductChanged?.Invoke(this, e);
+    }
+
+    protected virtual void OnProductDeleted(ProductEventArgs e)
+    {
+        ProductDeleted?.Invoke(this, e);
+    }
+
+    private void BindingSource_ListChanged(object sender, System.ComponentModel.ListChangedEventArgs e)
+    {
+        if (gridView1.GetRow(e.NewIndex) is not ProductDTO product) throw new InvalidCastException("Wrong data type");
+
+        switch (e.ListChangedType)
+        {
+            case System.ComponentModel.ListChangedType.ItemAdded:
+                OnProductAdded(new ProductEventArgs(product));
+                break;
+            case System.ComponentModel.ListChangedType.ItemChanged:
+                OnProductChanged(new ProductEventArgs(product));
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void GridView1_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
+    {
+        if (e.Row is not ProductDTO product) throw new InvalidCastException("Wrong data type");
+
+        OnProductDeleted(new ProductEventArgs(product));
+    }
 
     void IProductsView.Load()
     {
@@ -39,43 +77,11 @@ public partial class ProductsView : UserControl, IProductsView
         gridView1.RefreshData();
     }
 
-    protected virtual void OnRowUpdated(object sender, ObjectUpdatedEventArgs e)
-    {
-        RowUpdated?.Invoke(sender, e);
-    }
-
-    protected virtual void OnRowRemoved(object sender, RowRemovedEventArgs e)
-    {
-        RowRemoved?.Invoke(sender, e);
-    }
-
-    protected virtual void OnRowInserted(object sender, EventArgs e)
-    {
-        RowInserted?.Invoke(sender, e);
-    }
-
     protected virtual void OnViewLoaded(object sender, EventArgs e)
     {
         ViewLoaded?.Invoke(sender, e);
     }
 
-    private void gridView1_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
-    {
-        var updatedObject = gridView1.GetRow(e.RowHandle);
-        OnRowUpdated(this, new ObjectUpdatedEventArgs(updatedObject));
-    }
-
-    private void btnAdd_Click(object sender, EventArgs e)
-    {
-        OnRowInserted(this, EventArgs.Empty);
-    }
-
-    private void btnRemove_Click(object sender, EventArgs e)
-    {
-        int removingObjectIndex = GetRemovingObjectIndex();
-        OnRowRemoved(sender, new RowRemovedEventArgs(removingObjectIndex));
-        UpdateView();
-    }
     private int GetRemovingObjectIndex()
     {
         var selectedRowHandle = gridView1.FocusedRowHandle;

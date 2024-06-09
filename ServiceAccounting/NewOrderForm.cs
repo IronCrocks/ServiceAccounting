@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DTO;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using View.Base;
 using View.ViewEventArgs;
@@ -8,29 +10,18 @@ namespace ServiceAccounting.View
 {
     public partial class NewOrderForm : Form, INewOrderView
     {
-        private readonly List<object> _products = new();
-
+        List<OrderItemDTO> _products = new List<OrderItemDTO>();
         public NewOrderForm()
         {
             InitializeComponent();
-            var bindingSource = new BindingSource { DataSource = _products };
-            gridControl2.DataSource = bindingSource;
+            OnViewLoaded(this, EventArgs.Empty);
         }
 
-        public event EventHandler<AddOrderItemEventArgs> OrderItemAdded;
+        public event EventHandler<OrderItemEventArgs> OrderItemAdded;
         public event EventHandler<AddOrderEventArgs> BtnAddOrderClicked;
         public event EventHandler ViewLoaded;
 
-        // TODO: переписать так, чтобы при добавлении одинакового товара, не создавались новые ордер итемы с уже
-        // добавленным товаром, вместо этого увеличивался счетчик данного товара в соответствующем ордер итеме.
-        public void AddOrderItem(object item)
-        {
-            _products.Add(item);
-            gridControl2.BeginUpdate();
-            gridControl2.EndUpdate();
-        }
-
-        public void UpdateView(IEnumerable<object> customers, IEnumerable<object> products)
+        public void LoadData(IEnumerable<CustomerDTO> customers, IEnumerable<ProductDTO> products)
         {
             var bindingSourceCustomers = new BindingSource { DataSource = customers };
             var bindingSourceProducts = new BindingSource { DataSource = products };
@@ -39,7 +30,16 @@ namespace ServiceAccounting.View
             gridLookUpEdit1.Properties.DataSource = bindingSourceCustomers;
         }
 
-        protected virtual void OnOrderItemAdded(object sender, AddOrderItemEventArgs e)
+        // TODO: переписать так, чтобы при добавлении одинакового товара, не создавались новые ордер итемы с уже
+        // добавленным товаром, вместо этого увеличивался счетчик данного товара в соответствующем ордер итеме.
+        public void AddOrderItem(OrderItemDTO item)
+        {
+            _products.Add(item);
+            gridControl2.BeginUpdate();
+            gridControl2.EndUpdate();
+        }
+
+        protected virtual void OnOrderItemAdded(object sender, OrderItemEventArgs e)
         {
             OrderItemAdded?.Invoke(this, e);
         }
@@ -56,15 +56,15 @@ namespace ServiceAccounting.View
 
         private void BtnAddOrderItem_Click(object sender, EventArgs e)
         {
-            var selectedRow = gridView1.GetFocusedRow();
-            OnOrderItemAdded(this, new AddOrderItemEventArgs(selectedRow, 1));
+            if (gridView1.GetFocusedRow() is not OrderItemDTO orderItemDTO) throw new InvalidCastException("Wrong data type.");
+            OnOrderItemAdded(this, new OrderItemEventArgs(orderItemDTO));
         }
 
         private void BtnRemoveOrderItem_Click(object sender, EventArgs e)
         {
-            var selectedRow = gridView2.GetFocusedRow();
+            if (gridView2.GetFocusedRow() is not OrderItemDTO orderItemDTO) throw new InvalidCastException("Wrong data type.");
 
-            _products.Remove(selectedRow);
+            _products.Remove(orderItemDTO);
             gridControl2.BeginUpdate();
             gridControl2.EndUpdate();
         }
@@ -76,13 +76,12 @@ namespace ServiceAccounting.View
 
         private void BtnAddOrder_Click(object sender, EventArgs e)
         {
-            var selectedProducts = GetProductRows();
             var selectedCustomer = GetSelectedCustomer1();
             var selectedDate = dateEdit1.DateTime;
 
             if (selectedCustomer is null) return;
 
-            OnBtnAddOrderClicked(this, new AddOrderEventArgs(selectedProducts, selectedCustomer, selectedDate));
+            OnBtnAddOrderClicked(this, new AddOrderEventArgs(_products, selectedCustomer, selectedDate));
 
             //var order = CreateOrder();
             //selectedCustomer.Orders.Add(order);

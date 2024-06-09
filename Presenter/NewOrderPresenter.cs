@@ -1,4 +1,5 @@
-﻿using Model.Data;
+﻿using DTO;
+using Model.Data;
 using Model.Services.Base;
 using View.Base;
 
@@ -23,13 +24,20 @@ public class NewOrderPresenter
         _newOrderView.OrderItemAdded += NewOrderView_OrderItemAdded;
     }
 
-    private void NewOrderView_OrderItemAdded(object? sender, View.ViewEventArgs.AddOrderItemEventArgs e)
+    private void NewOrderView_OrderItemAdded(object? sender, View.ViewEventArgs.OrderItemEventArgs e)
     {
-        var product = e.Product as Product ??
-            throw new InvalidOperationException($"Невозможно привести {e.Product} к типу {nameof(Product)}");
+        //var product = e.Product as Product ??
+        //    throw new InvalidOperationException($"Невозможно привести {e.Product} к типу {nameof(Product)}");
 
-        var orderItem = _ordersService.CreateOrderItem(product, e.Count);
+        var orderItem = CreateOrderItem(e.OrderItemDTO);
         _newOrderView.AddOrderItem(orderItem);
+
+        OrderItem CreateOrderItem(OrderItemDTO orderItemDTO) => new()
+        {
+            Id = orderItemDTO.Id,
+            Count = orderItemDTO.Count,
+            ProductId = orderItemDTO.ProductId
+        };
     }
 
     private void NewOrderView_BtnAddOrderClicked(object? sender, View.ViewEventArgs.AddOrderEventArgs e)
@@ -47,6 +55,21 @@ public class NewOrderPresenter
         var customers = _customersService.GetCustomers();
         var products = _productsService.GetProducts();
 
-        //_newOrderView.UpdateView(customers, products);
+        var customersDTO = customers.Select(p => new CustomerDTO
+        {
+            Id = p.Id,
+            Name = p.Name,
+            Age = p.Age
+        }).ToList();
+
+        var productsDTO = products.Select(p => new ProductDTO
+        {
+            Id = p.Id,
+            Name = p.Name,
+            Description = p.Description,
+            Price = p.Price
+        }).ToList();
+
+        _newOrderView.LoadData(customersDTO, productsDTO);
     }
 }

@@ -14,7 +14,7 @@ public class CustomerDTO : INotifyPropertyChanged
         get => name;
         set
         {
-            if (name == value) return;
+            if (name.Equals(value, StringComparison.InvariantCulture)) return;
             name = value;
             OnPropertyChanged(nameof(Name));
         }

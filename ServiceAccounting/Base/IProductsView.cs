@@ -13,5 +13,4 @@ public interface IProductsView : IView
 
     public void LoadData(IEnumerable<ProductDTO> products);
     public void Load();
-    void UpdateView();
 }

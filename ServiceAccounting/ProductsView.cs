@@ -74,11 +74,6 @@ public partial class ProductsView : UserControl, IProductsView
         OnViewLoaded(this, EventArgs.Empty);
     }
 
-    public void UpdateView()
-    {
-        gridView1.RefreshData();
-    }
-
     protected virtual void OnViewLoaded(object sender, EventArgs e)
     {
         ViewLoaded?.Invoke(sender, e);

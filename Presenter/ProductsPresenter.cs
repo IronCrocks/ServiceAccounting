@@ -1,6 +1,8 @@
 ﻿using DevExpress.Xpo;
+using DTO;
 using Model.Data;
 using Model.Services.Base;
+using System.ComponentModel;
 using View.Base;
 using View.ViewEventArgs;
 
@@ -17,33 +19,50 @@ public class ProductsPresenter : IPresenter
         _productsService = productsService ?? throw new ArgumentNullException(nameof(productsService));
 
         _productsView.ViewLoaded += ProductsView_ViewLoaded;
-        _productsView.RowUpdated += ProductsView_RowUpdated;
-        _productsView.RowRemoved += ProductsView_RowRemoved;
-        _productsView.RowInserted += ProductsView_RowInserted;
+        _productsView.ProductAdded += ProductsView_ProductAdded;
+        _productsView.ProductChanged += ProductsView_ProductChanged;
+        _productsView.ProductDeleted += ProductsView_ProductDeleted;
     }
 
-    private void ProductsView_RowInserted(object? sender, EventArgs e)
+    private void ProductsView_ProductAdded(object? sender, ProductEventArgs e)
     {
-        var product = _productsService.AddDefaultProduct();
-        _productsView.Products.Add(product);
-        _productsView.UpdateView();
+        var product = CreateProduct(e.ProductDTO);
+        _productsService.AddProduct(product);
+    }
+
+    private void ProductsView_ProductChanged(object? sender, ProductEventArgs e)
+    {
+        var updatedProduct = CreateProduct(e.ProductDTO);
+        _productsService.UpdateProduct(updatedProduct);
+    }
+
+    private void ProductsView_ProductDeleted(object? sender, ProductEventArgs e)
+    {
+        var product = _productsService.GetProductById(e.ProductDTO.Id);
+        _productsService.RemoveProduct(product);
     }
 
     private void ProductsView_ViewLoaded(object? sender, EventArgs e)
     {
-        var data = _productsService.GetProducts();
-        _productsView.LoadData(data);
+        var products = _productsService.GetProducts();
+        var productsDTO = products.Select(p => new ProductDTO
+        {
+            Id = p.Id,
+            Description = p.Description,
+            Name = p.Name,
+            Price = p.Price
+        }).ToList();
+
+        var bindingList = new BindingList<ProductDTO>(productsDTO);
+        _productsView.LoadData(productsDTO);
     }
 
-    private void ProductsView_RowRemoved(object? sender, RowRemovedEventArgs e)
+    private Product CreateProduct(ProductDTO productDTO) => new()
     {
-        _productsService.RemoveProduct(e.Index);
-    }
-
-    private void ProductsView_RowUpdated(object? sender, ObjectUpdatedEventArgs e)
-    {
-        var changedProduct = e.UpdatedObject as Product;
-        _productsService.ChangeProduct(changedProduct);
-    }
+        Id = productDTO.Id,
+        Name = productDTO.Name,
+        Description = productDTO.Description,
+        Price = productDTO.Price
+    };
 }
 

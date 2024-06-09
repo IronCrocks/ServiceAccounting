@@ -4,9 +4,10 @@ namespace Model.Services.Base;
 
 public interface IProductsService : IService
 {
-    public IEnumerable<object> GetProducts();
-    public Product AddDefaultProduct();
-    public void SaveChanges();
-    void RemoveProduct(int productIndex);
-    void ChangeProduct(Product? changedProduct);
+    public IEnumerable<Product> GetProducts();
+   
+    void AddProduct(Product product);
+    Product GetProductById(int id);
+    void UpdateProduct(Product product);
+    void RemoveProduct(Product product);
 }

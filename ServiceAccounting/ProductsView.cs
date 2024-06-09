@@ -13,6 +13,8 @@ public partial class ProductsView : UserControl, IProductsView
     public ProductsView()
     {
         InitializeComponent();
+
+        OnViewLoaded(this, EventArgs.Empty);
     }
 
     public event EventHandler ViewLoaded;
@@ -23,8 +25,8 @@ public partial class ProductsView : UserControl, IProductsView
     public void LoadData(IEnumerable<ProductDTO> products)
     {
         _bindingSource = new BindingSource() { DataSource = products };
-        gridControl1.DataSource = _bindingSource;
         _bindingSource.ListChanged += BindingSource_ListChanged;
+        gridControl1.DataSource = _bindingSource;
         gridView1.RowDeleted += GridView1_RowDeleted;
     }
 
@@ -80,14 +82,5 @@ public partial class ProductsView : UserControl, IProductsView
     protected virtual void OnViewLoaded(object sender, EventArgs e)
     {
         ViewLoaded?.Invoke(sender, e);
-    }
-
-    private int GetRemovingObjectIndex()
-    {
-        var selectedRowHandle = gridView1.FocusedRowHandle;
-        var column = gridView1.Columns[0];
-        var removingObjectIndex = Convert.ToInt32(gridView1.GetRowCellValue(selectedRowHandle, column));
-
-        return removingObjectIndex;
     }
 }

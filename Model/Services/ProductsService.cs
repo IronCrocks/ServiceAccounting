@@ -6,48 +6,36 @@ namespace Model.Services;
 
 public class ProductsService : IProductsService
 {
-    public IEnumerable<object> GetProducts()
+    public IEnumerable<Product> GetProducts()
     {
         using var dbContext = new ApplicationDBContext();
         return dbContext.Products.ToList();
     }
 
-    public Product AddDefaultProduct()
+    public void AddProduct(Product product)
     {
-        var product = new Product();
-
-        using var dbContext = new ApplicationDBContext();
+        using ApplicationDBContext dbContext = new ApplicationDBContext();
         dbContext.Products.Add(product);
         dbContext.SaveChanges();
-
-        return product;
     }
 
-    public void RemoveProduct(int productIndex)
+    public Product GetProductById(int id)
     {
         using var dbContext = new ApplicationDBContext();
-        var removingProduct = GetProductByIndex(dbContext, productIndex);
-        dbContext.Products.Remove(removingProduct);
+        return dbContext.Products.Find(id);
+    }
+
+    public void UpdateProduct(Product product)
+    {
+        using ApplicationDBContext dbContext = new ApplicationDBContext();
+        dbContext.Products.Update(product);
         dbContext.SaveChanges();
     }
 
-    public void SaveChanges()
+    public void RemoveProduct(Product product)
     {
         using var dbContext = new ApplicationDBContext();
-        dbContext.SaveChanges();
-    }
-
-    public void ChangeProduct(Product? changedProduct)
-    {
-        ArgumentNullException.ThrowIfNull(changedProduct);
-        using var dbContext = new ApplicationDBContext();
-
-        var selectedProduct = dbContext.Products.Find(changedProduct.Id) ?? throw new InvalidOperationException(
-            $"Изменяемый товар с наименованием {changedProduct.Name} не найден в базе данных.");
-
-        selectedProduct.Name = changedProduct.Name;
-        selectedProduct.Description = changedProduct.Description;
-        selectedProduct.Price = changedProduct.Price;
+        dbContext.Products.Remove(product);
         dbContext.SaveChanges();
     }
 

@@ -62,7 +62,6 @@
             gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colId, colName, colDescription, colPrice });
             gridView1.GridControl = gridControl1;
             gridView1.Name = "gridView1";
-            gridView1.RowUpdated += gridView1_RowUpdated;
             // 
             // colId
             // 
@@ -109,7 +108,6 @@
             btnRemove.Name = "btnRemove";
             btnRemove.Size = new System.Drawing.Size(21, 20);
             btnRemove.TabIndex = 1;
-            btnRemove.Click += btnRemove_Click;
             // 
             // btnAdd
             // 
@@ -118,7 +116,6 @@
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new System.Drawing.Size(21, 20);
             btnAdd.TabIndex = 0;
-            btnAdd.Click += btnAdd_Click;
             // 
             // panelControl2
             // 

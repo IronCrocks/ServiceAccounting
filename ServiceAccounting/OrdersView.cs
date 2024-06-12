@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using DevExpress.XtraReports.UI;
+using DTO;
 using View.Base;
 
 namespace ServiceAccounting.View;
@@ -19,7 +20,7 @@ public partial class OrdersView : UserControl, IOrdersView
     public event EventHandler ViewLoaded;
     public event EventHandler btnAddOrderClicked;
 
-    public void UpdateView(IEnumerable<object> orders)
+    public void UpdateView(IEnumerable<OrderDTO> orders)
     {
         var bindingSource = new BindingSource { DataSource = orders };
         pivotGridControl1.DataSource = bindingSource;
@@ -52,9 +53,8 @@ public partial class OrdersView : UserControl, IOrdersView
     private void BtnAddOrder_Click(object sender, EventArgs e)
     {
         _newOrderForm.Load();
-        var form = _newOrderForm as NewOrderForm;
+        if (_newOrderForm is not NewOrderForm form) throw new InvalidOperationException();
         form.ShowDialog();
-        //form.Show();
         OnBtnAddOrderClicked(this, EventArgs.Empty);
     }
 

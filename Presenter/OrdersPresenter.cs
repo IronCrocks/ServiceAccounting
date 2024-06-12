@@ -1,12 +1,13 @@
-﻿using Model.Services.Base;
+﻿using DTO;
+using Model.Services.Base;
 using View.Base;
 
 namespace Presenter;
 
 public class OrdersPresenter
 {
-    IOrdersView _ordersView;
-    IOrdersService _ordersService;
+    private readonly IOrdersView _ordersView;
+    private readonly IOrdersService _ordersService;
 
     public OrdersPresenter(IOrdersView ordersView, IOrdersService ordersService)
     {
@@ -30,7 +31,16 @@ public class OrdersPresenter
     private void UpdateViewData()
     {
         var orders = _ordersService.GetOrders();
-        _ordersView.UpdateView(orders);
+
+        var ordersDTO = orders.Select(p => new OrderDTO
+        {
+            CustomerName = p.productName,
+            productName = p.productName,
+            Count = p.count,
+            Date = p.date,
+            Price = p.price
+        }).ToList();
+
+        _ordersView.UpdateView(ordersDTO);
     }
 }
-

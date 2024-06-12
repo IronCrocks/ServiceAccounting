@@ -2,6 +2,7 @@
 using Model.Data;
 using Model.Services.Base;
 using View.Base;
+using View.ViewEventArgs;
 
 namespace Presenter;
 
@@ -12,6 +13,8 @@ public class NewOrderPresenter
     private readonly ICustomersService _customersService;
     private readonly IProductsService _productsService;
 
+    private List<OrderItemDTO> _items = new();
+
     public NewOrderPresenter(INewOrderView newOrderView, IOrdersService ordersService, ICustomersService customersService, IProductsService productsService)
     {
         _newOrderView = newOrderView ?? throw new ArgumentNullException(nameof(newOrderView));
@@ -20,8 +23,9 @@ public class NewOrderPresenter
         _productsService = productsService ?? throw new ArgumentNullException(nameof(productsService));
 
         _newOrderView.ViewLoaded += NewOrderView_ViewLoaded;
-        _newOrderView.BtnAddOrderClicked += NewOrderView_BtnAddOrderClicked;
         _newOrderView.OrderItemAdded += NewOrderView_OrderItemAdded;
+        _newOrderView.OrderItemDeleted += NewOrderView_OrderItemDeleted;
+        _newOrderView.BtnAddOrderClicked += NewOrderView_BtnAddOrderClicked;
     }
 
     private void NewOrderView_OrderItemAdded(object? sender, View.ViewEventArgs.OrderItemEventArgs e)
@@ -29,8 +33,26 @@ public class NewOrderPresenter
         //var product = e.Product as Product ??
         //    throw new InvalidOperationException($"Невозможно привести {e.Product} к типу {nameof(Product)}");
 
-        var orderItem = CreateOrderItem(e.OrderItemDTO);
-        _newOrderView.AddOrderItem(orderItem);
+        _items.Add(e.OrderItemDTO);
+    }
+
+    private void NewOrderView_OrderItemDeleted(object? sender, OrderItemEventArgs e)
+    {
+        _items.Remove(e.OrderItemDTO);
+    }
+
+    private void NewOrderView_BtnAddOrderClicked(object? sender, AddOrderEventArgs e)
+    {
+        List<OrderItem> createdItems = new();
+
+        foreach (var item in _items)
+        {
+            var orderItem = CreateOrderItem(item);
+            createdItems.Add(orderItem);
+        }
+
+        var customer = _customersService.GetCustomerById(e.Customer.Id);
+        _ordersService.CreateOrder(customer, createdItems, e.Date);
 
         OrderItem CreateOrderItem(OrderItemDTO orderItemDTO) => new()
         {
@@ -38,16 +60,7 @@ public class NewOrderPresenter
             Count = orderItemDTO.Count,
             ProductId = orderItemDTO.ProductId
         };
-    }
 
-    private void NewOrderView_BtnAddOrderClicked(object? sender, View.ViewEventArgs.AddOrderEventArgs e)
-    {
-        var selectedCustomer = e.Customer as Customer;
-
-        if (selectedCustomer is null) throw new ArgumentNullException(nameof(selectedCustomer));
-
-        var customer = _customersService.GetCustomerById(selectedCustomer.Id);
-        _ordersService.CreateOrder(customer, e.Products.Cast<Product>().ToList(), e.Date);
     }
 
     private void NewOrderView_ViewLoaded(object? sender, EventArgs e)

@@ -10,5 +10,5 @@ public class Customer
     public string Email { get; set; } = string.Empty;
     public int Age { get; set; }
 
-    public List<Order> Orders { get; set; } = new List<Order>();
+    public List<Order> Orders { get; set; } = new();
 }

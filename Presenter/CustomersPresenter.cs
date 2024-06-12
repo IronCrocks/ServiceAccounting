@@ -9,8 +9,8 @@ namespace Presenter;
 
 public class CustomersPresenter
 {
-    ICustomersView _customersView;
-    ICustomersService _customersService;
+    private readonly ICustomersView _customersView;
+    private readonly ICustomersService _customersService;
 
     public CustomersPresenter(ICustomersView customersView, ICustomersService customersService)
     {

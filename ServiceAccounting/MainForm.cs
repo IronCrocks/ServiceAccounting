@@ -4,15 +4,15 @@ using View.Base;
 
 namespace ServiceAccounting;
 
-public partial class MainForm : DevExpress.XtraEditors.XtraForm
+public partial class MainForm : DevExpress.XtraEditors.XtraForm, IMainForm
 {
     private Control _view;
     private readonly ICustomersView _customersView;
     private readonly IProductsView _productsView;
     private readonly IOrdersView _ordersView;
 
-    public MainForm(ICustomersView customersView, 
-        IProductsView productsView, 
+    public MainForm(ICustomersView customersView,
+        IProductsView productsView,
         IOrdersView ordersView)
     {
         _customersView = customersView ?? throw new ArgumentNullException(nameof(customersView));

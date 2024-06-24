@@ -1,12 +1,13 @@
 ﻿using DTO;
 using Model.Data;
 using Model.Services.Base;
+using Presenter.Base;
 using View.Base;
 using View.ViewEventArgs;
 
 namespace Presenter;
 
-public class NewOrderPresenter
+public class NewOrderPresenter : INewOrderPresenter
 {
     private readonly INewOrderView _newOrderView;
     private readonly IOrdersService _ordersService;

@@ -1,14 +1,14 @@
-﻿using DevExpress.Xpo;
-using DTO;
+﻿using DTO;
 using Model.Data;
 using Model.Services.Base;
+using Presenter.Base;
 using System.ComponentModel;
 using View.Base;
 using View.ViewEventArgs;
 
 namespace Presenter;
 
-public class ProductsPresenter : IPresenter
+public class ProductsPresenter : IProductsPresenter
 {
     private readonly IProductsView _productsView;
     private readonly IProductsService _productsService;

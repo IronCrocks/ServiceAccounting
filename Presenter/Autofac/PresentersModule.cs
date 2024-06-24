@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Autofac;
+using Presenter.Base;
 
-namespace Presenter.Autofac
+namespace Presenter.Autofac;
+
+public class PresentersModule : Module
 {
-    internal class PresentersModule
+    protected override void Load(ContainerBuilder builder)
     {
+        builder.RegisterType<CustomersPresenter>().As<ICustomersPresenter>();
+        builder.RegisterType<ProductsPresenter>().As<IProductsPresenter>();
+        builder.RegisterType<OrdersPresenter>().As<IOrdersPresenter>();
+        builder.RegisterType<NewOrderPresenter>().As<INewOrderPresenter>();
     }
 }

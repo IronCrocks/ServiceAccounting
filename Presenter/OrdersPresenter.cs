@@ -1,10 +1,11 @@
 ﻿using DTO;
 using Model.Services.Base;
+using Presenter.Base;
 using View.Base;
 
 namespace Presenter;
 
-public class OrdersPresenter
+public class OrdersPresenter : IOrdersPresenter
 {
     private readonly IOrdersView _ordersView;
     private readonly IOrdersService _ordersService;

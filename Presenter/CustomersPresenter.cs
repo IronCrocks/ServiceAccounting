@@ -1,13 +1,14 @@
 ﻿using DTO;
 using Model.Data;
 using Model.Services.Base;
+using Presenter.Base;
 using System.ComponentModel;
 using View.Base;
 using View.ViewEventArgs;
 
 namespace Presenter;
 
-public class CustomersPresenter
+public class CustomersPresenter : ICustomersPresenter
 {
     private readonly ICustomersView _customersView;
     private readonly ICustomersService _customersService;

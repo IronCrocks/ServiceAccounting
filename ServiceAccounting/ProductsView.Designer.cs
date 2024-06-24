@@ -28,32 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProductsView));
             gridControl1 = new DevExpress.XtraGrid.GridControl();
             gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             colId = new DevExpress.XtraGrid.Columns.GridColumn();
             colName = new DevExpress.XtraGrid.Columns.GridColumn();
             colDescription = new DevExpress.XtraGrid.Columns.GridColumn();
             colPrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            panelControl1 = new DevExpress.XtraEditors.PanelControl();
-            btnRemove = new DevExpress.XtraEditors.SimpleButton();
-            btnAdd = new DevExpress.XtraEditors.SimpleButton();
-            panelControl2 = new DevExpress.XtraEditors.PanelControl();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)panelControl1).BeginInit();
-            panelControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)panelControl2).BeginInit();
-            panelControl2.SuspendLayout();
             SuspendLayout();
             // 
             // gridControl1
             // 
+            gridControl1.DataSource = typeof(DTO.ProductDTO);
             gridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            gridControl1.Location = new System.Drawing.Point(2, 2);
+            gridControl1.Location = new System.Drawing.Point(0, 0);
             gridControl1.MainView = gridView1;
             gridControl1.Name = "gridControl1";
-            gridControl1.Size = new System.Drawing.Size(442, 240);
+            gridControl1.Size = new System.Drawing.Size(446, 263);
             gridControl1.TabIndex = 0;
             gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
             // 
@@ -91,55 +83,15 @@
             colPrice.Visible = true;
             colPrice.VisibleIndex = 3;
             // 
-            // panelControl1
-            // 
-            panelControl1.Controls.Add(btnRemove);
-            panelControl1.Controls.Add(btnAdd);
-            panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            panelControl1.Location = new System.Drawing.Point(0, 0);
-            panelControl1.Name = "panelControl1";
-            panelControl1.Size = new System.Drawing.Size(446, 19);
-            panelControl1.TabIndex = 1;
-            // 
-            // btnRemove
-            // 
-            btnRemove.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnRemove.ImageOptions.Image");
-            btnRemove.Location = new System.Drawing.Point(20, 0);
-            btnRemove.Name = "btnRemove";
-            btnRemove.Size = new System.Drawing.Size(21, 20);
-            btnRemove.TabIndex = 1;
-            // 
-            // btnAdd
-            // 
-            btnAdd.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnAdd.ImageOptions.Image");
-            btnAdd.Location = new System.Drawing.Point(0, 0);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Size = new System.Drawing.Size(21, 20);
-            btnAdd.TabIndex = 0;
-            // 
-            // panelControl2
-            // 
-            panelControl2.Controls.Add(gridControl1);
-            panelControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            panelControl2.Location = new System.Drawing.Point(0, 19);
-            panelControl2.Name = "panelControl2";
-            panelControl2.Size = new System.Drawing.Size(446, 244);
-            panelControl2.TabIndex = 2;
-            // 
             // ProductsView
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            Controls.Add(panelControl2);
-            Controls.Add(panelControl1);
+            Controls.Add(gridControl1);
             Name = "ProductsView";
             Size = new System.Drawing.Size(446, 263);
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)panelControl1).EndInit();
-            panelControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)panelControl2).EndInit();
-            panelControl2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -147,10 +99,6 @@
 
         private DevExpress.XtraGrid.GridControl gridControl1;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
-        private DevExpress.XtraEditors.PanelControl panelControl1;
-        private DevExpress.XtraEditors.SimpleButton btnAdd;
-        private DevExpress.XtraEditors.PanelControl panelControl2;
-        private DevExpress.XtraEditors.SimpleButton btnRemove;
         private DevExpress.XtraGrid.Columns.GridColumn colId;
         private DevExpress.XtraGrid.Columns.GridColumn colName;
         private DevExpress.XtraGrid.Columns.GridColumn colDescription;

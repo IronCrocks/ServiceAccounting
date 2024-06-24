@@ -9,10 +9,10 @@ public class ViewsModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
-        builder.RegisterType<MainForm>().As<IMainForm>();
-        builder.RegisterType<CustomersView>().As<ICustomersView>();
-        builder.RegisterType<ProductsView>().As<IProductsView>();
-        builder.RegisterType<OrdersView>().As<IOrdersView>();
-        builder.RegisterType<NewOrderForm>().As<INewOrderView>();
+        builder.RegisterType<CustomersView>().As<ICustomersView>().SingleInstance();
+        builder.RegisterType<ProductsView>().As<IProductsView>().SingleInstance();
+        builder.RegisterType<OrdersView>().As<IOrdersView>().SingleInstance();
+        builder.RegisterType<NewOrderForm>().As<INewOrderView>().SingleInstance();
+        builder.RegisterType<MainForm>().As<IMainForm>().SingleInstance();
     }
 }

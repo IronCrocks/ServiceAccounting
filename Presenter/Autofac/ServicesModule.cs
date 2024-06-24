@@ -8,8 +8,8 @@ public class ServicesModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
-        builder.RegisterType<CustomersService>().As<ICustomersService>();
-        builder.RegisterType<ProductsService>().As<IProductsService>();
-        builder.RegisterType<OrdersService>().As<IOrdersService>();
+        builder.RegisterType<CustomersService>().As<ICustomersService>().SingleInstance();
+        builder.RegisterType<ProductsService>().As<IProductsService>().SingleInstance();
+        builder.RegisterType<OrdersService>().As<IOrdersService>().SingleInstance();
     }
 }

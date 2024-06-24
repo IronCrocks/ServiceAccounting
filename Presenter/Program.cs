@@ -40,13 +40,15 @@ internal static class Program
         //var customersService = new CustomersService();
         //var productsService = new ProductsService();
         //var ordersService = new OrdersService();
-        
-        var customersPresenter = scope.Resolve<ICustomersPresenter>();
-        var productsPresenter = scope.Resolve<IProductsPresenter>();
-        var ordersPresenter = scope.Resolve<IOrdersPresenter>();
-        var newOrderPresenter = scope.Resolve<INewOrderPresenter>();
-        var mainForm = scope.Resolve<IMainForm>();
-        Application.Run((Form)mainForm);
+
+        //var customersPresenter = scope.Resolve<ICustomersPresenter>();
+        //var productsPresenter = scope.Resolve<IProductsPresenter>();
+        //var ordersPresenter = scope.Resolve<IOrdersPresenter>();
+        //var newOrderPresenter = scope.Resolve<INewOrderPresenter>();
+        //var mainForm = scope.Resolve<IMainForm>();
+
+        if (scope.Resolve<IMainFormPresenter>() is not ApplicationContext mainFormPresenter) throw new InvalidOperationException();
+        Application.Run(mainFormPresenter);
 
         //Application.Run(new MainFormPresenter(new MainForm(customersView, productsView, ordersView),
         //    new NewOrderPresenter(newOrderForm, ordersService, customersService, productsService),

@@ -12,14 +12,15 @@ public class ProductsService : IProductsService
         return dbContext.Products.ToList();
     }
 
-    public void AddProduct(Product product)
+    public int AddProduct(Product product)
     {
         using ApplicationDBContext dbContext = new ApplicationDBContext();
         dbContext.Products.Add(product);
         dbContext.SaveChanges();
+        return product.Id;
     }
 
-    public Product GetProductById(int id)
+    public Product? GetProductById(int id)
     {
         using var dbContext = new ApplicationDBContext();
         return dbContext.Products.Find(id);

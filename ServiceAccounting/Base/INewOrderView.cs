@@ -8,7 +8,7 @@ namespace View.Base;
 public interface INewOrderView : IView
 {
     public event EventHandler<AddOrderEventArgs> BtnAddOrderClicked;
-    event EventHandler<OrderItemEventArgs> OrderItemAdded;
+    event EventHandler<ProductEventArgs> OrderItemAdded;
     event EventHandler<OrderItemEventArgs> OrderItemDeleted;
 
     void Load();

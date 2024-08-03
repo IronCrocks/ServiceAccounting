@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraPivotGrid.DataSourceColumnBinding dataSourceColumnBinding1 = new DevExpress.XtraPivotGrid.DataSourceColumnBinding();
+            DevExpress.XtraPivotGrid.DataSourceColumnBinding dataSourceColumnBinding2 = new DevExpress.XtraPivotGrid.DataSourceColumnBinding();
             panelControl1 = new DevExpress.XtraEditors.PanelControl();
             pivotGridControl1 = new DevExpress.XtraPivotGrid.PivotGridControl();
             pivotGridField2 = new DevExpress.XtraPivotGrid.PivotGridField();
@@ -50,7 +50,7 @@
             panelControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             panelControl1.Location = new System.Drawing.Point(0, 0);
             panelControl1.Name = "panelControl1";
-            panelControl1.Size = new System.Drawing.Size(1037, 463);
+            panelControl1.Size = new System.Drawing.Size(1037, 580);
             panelControl1.TabIndex = 0;
             // 
             // pivotGridControl1
@@ -60,7 +60,7 @@
             pivotGridControl1.Location = new System.Drawing.Point(2, 2);
             pivotGridControl1.Name = "pivotGridControl1";
             pivotGridControl1.OptionsData.DataProcessingEngine = DevExpress.XtraPivotGrid.PivotDataProcessingEngine.Optimized;
-            pivotGridControl1.Size = new System.Drawing.Size(1033, 459);
+            pivotGridControl1.Size = new System.Drawing.Size(1033, 576);
             pivotGridControl1.TabIndex = 0;
             // 
             // pivotGridField2
@@ -73,7 +73,7 @@
             // 
             pivotGridField1.Area = DevExpress.XtraPivotGrid.PivotArea.ColumnArea;
             pivotGridField1.AreaIndex = 0;
-            pivotGridField1.DataBinding = dataSourceColumnBinding1;
+            pivotGridField1.DataBinding = dataSourceColumnBinding2;
             pivotGridField1.Name = "pivotGridField1";
             // 
             // pivotGridField3
@@ -87,14 +87,14 @@
             panelControl2.Controls.Add(btnReport);
             panelControl2.Controls.Add(btnAddOrder);
             panelControl2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            panelControl2.Location = new System.Drawing.Point(0, 463);
+            panelControl2.Location = new System.Drawing.Point(0, 580);
             panelControl2.Name = "panelControl2";
-            panelControl2.Size = new System.Drawing.Size(1037, 153);
+            panelControl2.Size = new System.Drawing.Size(1037, 36);
             panelControl2.TabIndex = 1;
             // 
             // btnReport
             // 
-            btnReport.Location = new System.Drawing.Point(86, 41);
+            btnReport.Location = new System.Drawing.Point(95, 6);
             btnReport.Name = "btnReport";
             btnReport.Size = new System.Drawing.Size(75, 23);
             btnReport.TabIndex = 1;
@@ -103,7 +103,7 @@
             // 
             // btnAddOrder
             // 
-            btnAddOrder.Location = new System.Drawing.Point(5, 41);
+            btnAddOrder.Location = new System.Drawing.Point(14, 6);
             btnAddOrder.Name = "btnAddOrder";
             btnAddOrder.Size = new System.Drawing.Size(75, 23);
             btnAddOrder.TabIndex = 0;

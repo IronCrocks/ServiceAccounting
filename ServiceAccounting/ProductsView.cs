@@ -47,7 +47,9 @@ public partial class ProductsView : UserControl, IProductsView
 
     private void BindingSource_ListChanged(object sender, System.ComponentModel.ListChangedEventArgs e)
     {
-        if (gridView1.GetRow(e.NewIndex) is not ProductDTO product) throw new InvalidCastException("Wrong data type");
+        if (e.ListChangedType == System.ComponentModel.ListChangedType.ItemDeleted) return;
+
+        if (_bindingSource[e.NewIndex] is not ProductDTO product) throw new InvalidCastException("Wrong data type");
 
         switch (e.ListChangedType)
         {

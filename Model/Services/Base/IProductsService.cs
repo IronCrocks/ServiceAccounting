@@ -6,8 +6,8 @@ public interface IProductsService : IService
 {
     public IEnumerable<Product> GetProducts();
    
-    void AddProduct(Product product);
-    Product GetProductById(int id);
+    int AddProduct(Product product);
+    Product? GetProductById(int id);
     void UpdateProduct(Product product);
     void RemoveProduct(Product product);
 }

@@ -27,18 +27,25 @@ public class ProductsPresenter : IProductsPresenter
     private void ProductsView_ProductAdded(object? sender, ProductEventArgs e)
     {
         var product = CreateProduct(e.ProductDTO);
-        _productsService.AddProduct(product);
+        int productId = _productsService.AddProduct(product);
+        e.ProductDTO.Id = productId;
     }
 
     private void ProductsView_ProductChanged(object? sender, ProductEventArgs e)
     {
-        var updatedProduct = CreateProduct(e.ProductDTO);
-        _productsService.UpdateProduct(updatedProduct);
+        var product = _productsService.GetProductById(e.ProductDTO.Id);
+        if (product is null) throw new ArgumentNullException(nameof(product));
+
+        product.Name = e.ProductDTO.Name;
+        product.Description = e.ProductDTO.Description;
+        product.Price = e.ProductDTO.Price;
+        _productsService.UpdateProduct(product);
     }
 
     private void ProductsView_ProductDeleted(object? sender, ProductEventArgs e)
     {
         var product = _productsService.GetProductById(e.ProductDTO.Id);
+        if (product is null) throw new ArgumentNullException(nameof(product));
         _productsService.RemoveProduct(product);
     }
 

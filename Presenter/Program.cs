@@ -17,7 +17,7 @@ internal static class Program
     static void Main()
     {
         using var db = new ApplicationDBContext();
-        db.Database.EnsureDeleted();
+        //db.Database.EnsureDeleted();
         db.Database.EnsureCreated();
 
         Application.EnableVisualStyles();
@@ -47,7 +47,11 @@ internal static class Program
         //var newOrderPresenter = scope.Resolve<INewOrderPresenter>();
         //var mainForm = scope.Resolve<IMainForm>();
 
-        if (scope.Resolve<IMainFormPresenter>() is not ApplicationContext mainFormPresenter) throw new InvalidOperationException();
+        if (scope.Resolve<IMainFormPresenter>() is not ApplicationContext mainFormPresenter)
+        {
+            throw new InvalidOperationException();
+        }
+
         Application.Run(mainFormPresenter);
 
         //Application.Run(new MainFormPresenter(new MainForm(customersView, productsView, ordersView),

@@ -27,7 +27,8 @@ public class CustomersPresenter : ICustomersPresenter
     private void CustomersView_CustomerAdded(object? sender, CustomerEventArgs e)
     {
         var customer = CreateCustomer(e.Customer);
-        _customersService.AddCustomer(customer);
+        int customerId = _customersService.AddCustomer(customer);
+        e.Customer.Id = customerId;
     }
 
     private void CustomersView_CustomerDeleted(object? sender, CustomerEventArgs e)
@@ -38,7 +39,9 @@ public class CustomersPresenter : ICustomersPresenter
 
     private void CustomersView_CustomerChanged(object? sender, CustomerEventArgs e)
     {
-        var customer = CreateCustomer(e.Customer);
+        var customer = _customersService.GetCustomerById(e.Customer.Id);
+        customer.Name = e.Customer.Name;
+        customer.Age = e.Customer.Age;
         _customersService.UpdateCustomer(customer);
     }
 

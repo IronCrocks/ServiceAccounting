@@ -28,17 +28,18 @@ public class CustomersService : ICustomersService
         return result.ToList();
     }
 
-    public Customer GetCustomerById(int id)
+    public Customer? GetCustomerById(int id)
     {
         using var dbContext = new ApplicationDBContext();
         return dbContext.Customers.Find(id);
     }
 
-    public void AddCustomer(Customer customer)
+    public int AddCustomer(Customer customer)
     {
         using var dbContext = new ApplicationDBContext();
         dbContext.Customers.Add(customer);
         dbContext.SaveChanges();
+        return customer.Id;
     }
 
     public void DeleteCustomer(Customer customer)

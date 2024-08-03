@@ -17,7 +17,7 @@ namespace ServiceAccounting.View
         }
 
         public event EventHandler ViewLoaded;
-        public event EventHandler<OrderItemEventArgs> OrderItemAdded;
+        public event EventHandler<ProductEventArgs> OrderItemAdded;
         public event EventHandler<OrderItemEventArgs> OrderItemDeleted;
         public event EventHandler<AddOrderEventArgs> BtnAddOrderClicked;
 
@@ -46,7 +46,7 @@ namespace ServiceAccounting.View
             ViewLoaded?.Invoke(this, e);
         }
 
-        protected virtual void OnOrderItemAdded(object sender, OrderItemEventArgs e)
+        protected virtual void OnOrderItemAdded(object sender, ProductEventArgs e)
         {
             OrderItemAdded?.Invoke(this, e);
         }
@@ -63,8 +63,9 @@ namespace ServiceAccounting.View
 
         private void BtnAddOrderItem_Click(object sender, EventArgs e)
         {
-            if (gridView1.GetFocusedRow() is not OrderItemDTO orderItemDTO) throw new InvalidCastException("Wrong data type.");
-            OnOrderItemAdded(this, new OrderItemEventArgs(orderItemDTO));
+            var t = gridView1.GetFocusedRow();
+            if (gridView1.GetFocusedRow() is not ProductDTO productDTO) throw new InvalidCastException("Wrong data type.");
+            OnOrderItemAdded(this, new ProductEventArgs(productDTO));
         }
 
         private void BtnDeleteOrderItem_Click(object sender, EventArgs e)

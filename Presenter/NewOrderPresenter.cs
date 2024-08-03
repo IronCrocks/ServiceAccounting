@@ -29,8 +29,9 @@ public class NewOrderPresenter : INewOrderPresenter
         _newOrderView.BtnAddOrderClicked += NewOrderView_BtnAddOrderClicked;
     }
 
-    private void NewOrderView_OrderItemAdded(object? sender, View.ViewEventArgs.OrderItemEventArgs e)
+    private void NewOrderView_OrderItemAdded(object? sender, ProductEventArgs e)
     {
+        var orderItem = 
         //var product = e.Product as Product ??
         //    throw new InvalidOperationException($"Невозможно привести {e.Product} к типу {nameof(Product)}");
 

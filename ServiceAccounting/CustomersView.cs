@@ -35,6 +35,8 @@ public partial class CustomersView : UserControl, ICustomersView
     // (если это возможно)
     private void BindingSource_ListChanged(object sender, ListChangedEventArgs e)
     {
+        if (e.ListChangedType == ListChangedType.ItemDeleted) return;
+
         if (_bindingSource[e.NewIndex] is not CustomerDTO customer) throw new InvalidCastException("Wrong data type");
 
         switch (e.ListChangedType)
@@ -77,5 +79,12 @@ public partial class CustomersView : UserControl, ICustomersView
     void ICustomersView.Load()
     {
         OnViewLoaded(this, EventArgs.Empty);
+    }
+
+    public void MapCustomer(CustomerDTO customer, int id)
+    {
+        //customer.Id = id;
+        //string propName = nameof(CustomerDTO.Id);
+        //var t = _bindingSource.IndexOf(customer);
     }
 }

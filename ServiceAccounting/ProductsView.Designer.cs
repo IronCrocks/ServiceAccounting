@@ -30,58 +30,25 @@
         {
             gridControl1 = new DevExpress.XtraGrid.GridControl();
             gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            colId = new DevExpress.XtraGrid.Columns.GridColumn();
-            colName = new DevExpress.XtraGrid.Columns.GridColumn();
-            colDescription = new DevExpress.XtraGrid.Columns.GridColumn();
-            colPrice = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
             SuspendLayout();
             // 
             // gridControl1
             // 
-            gridControl1.DataSource = typeof(DTO.ProductDTO);
             gridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             gridControl1.Location = new System.Drawing.Point(0, 0);
             gridControl1.MainView = gridView1;
             gridControl1.Name = "gridControl1";
             gridControl1.Size = new System.Drawing.Size(446, 263);
             gridControl1.TabIndex = 0;
+            gridControl1.UseEmbeddedNavigator = true;
             gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
             // 
             // gridView1
             // 
-            gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colId, colName, colDescription, colPrice });
             gridView1.GridControl = gridControl1;
             gridView1.Name = "gridView1";
-            // 
-            // colId
-            // 
-            colId.FieldName = "Id";
-            colId.Name = "colId";
-            colId.Visible = true;
-            colId.VisibleIndex = 0;
-            // 
-            // colName
-            // 
-            colName.FieldName = "Name";
-            colName.Name = "colName";
-            colName.Visible = true;
-            colName.VisibleIndex = 1;
-            // 
-            // colDescription
-            // 
-            colDescription.FieldName = "Description";
-            colDescription.Name = "colDescription";
-            colDescription.Visible = true;
-            colDescription.VisibleIndex = 2;
-            // 
-            // colPrice
-            // 
-            colPrice.FieldName = "Price";
-            colPrice.Name = "colPrice";
-            colPrice.Visible = true;
-            colPrice.VisibleIndex = 3;
             // 
             // ProductsView
             // 
@@ -99,9 +66,5 @@
 
         private DevExpress.XtraGrid.GridControl gridControl1;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
-        private DevExpress.XtraGrid.Columns.GridColumn colId;
-        private DevExpress.XtraGrid.Columns.GridColumn colName;
-        private DevExpress.XtraGrid.Columns.GridColumn colDescription;
-        private DevExpress.XtraGrid.Columns.GridColumn colPrice;
     }
 }

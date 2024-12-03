@@ -63,8 +63,8 @@ namespace ServiceAccounting.View
 
         private void BtnAddOrderItem_Click(object sender, EventArgs e)
         {
-            var t = gridView1.GetFocusedRow();
             if (gridView1.GetFocusedRow() is not ProductDTO productDTO) throw new InvalidCastException("Wrong data type.");
+
             OnOrderItemAdded(this, new ProductEventArgs(productDTO));
         }
 

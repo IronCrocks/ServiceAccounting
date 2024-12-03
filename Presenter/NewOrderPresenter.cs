@@ -31,11 +31,15 @@ public class NewOrderPresenter : INewOrderPresenter
 
     private void NewOrderView_OrderItemAdded(object? sender, ProductEventArgs e)
     {
-        var orderItem = 
+
+        var orderItem = CreateOrderItem(e.ProductDTO);
+
+
+        //var orderItem = 
         //var product = e.Product as Product ??
         //    throw new InvalidOperationException($"Невозможно привести {e.Product} к типу {nameof(Product)}");
 
-        _items.Add(e.OrderItemDTO);
+        //_items.Add(e.OrderItemDTO);
     }
 
     private void NewOrderView_OrderItemDeleted(object? sender, OrderItemEventArgs e)
@@ -87,4 +91,11 @@ public class NewOrderPresenter : INewOrderPresenter
 
         _newOrderView.LoadData(customersDTO, productsDTO);
     }
+
+    private OrderItem CreateOrderItem(OrderItemDTO orderItemDTO) => new()
+    {
+        OrderId = orderItemDTO.Id,
+        ProductId = orderItemDTO.ProductId,
+        Count = orderItemDTO.Count
+    };
 }

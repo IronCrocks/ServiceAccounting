@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewOrderForm));
             panelControl2 = new DevExpress.XtraEditors.PanelControl();
             btnCancel = new DevExpress.XtraEditors.SimpleButton();
@@ -42,7 +43,12 @@
             btnDeleteOrderItem = new DevExpress.XtraEditors.SimpleButton();
             panelControl1 = new DevExpress.XtraEditors.PanelControl();
             gridControl2 = new DevExpress.XtraGrid.GridControl();
+            bindingSource1 = new System.Windows.Forms.BindingSource(components);
             gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            colName = new DevExpress.XtraGrid.Columns.GridColumn();
+            colDescription = new DevExpress.XtraGrid.Columns.GridColumn();
+            colPrice = new DevExpress.XtraGrid.Columns.GridColumn();
+            colCount = new DevExpress.XtraGrid.Columns.GridColumn();
             gridControl1 = new DevExpress.XtraGrid.GridControl();
             gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             ((System.ComponentModel.ISupportInitialize)panelControl2).BeginInit();
@@ -56,6 +62,7 @@
             ((System.ComponentModel.ISupportInitialize)panelControl1).BeginInit();
             panelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridControl2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
@@ -95,7 +102,7 @@
             // dateEdit1
             // 
             dateEdit1.EditValue = null;
-            dateEdit1.Location = new System.Drawing.Point(383, 79);
+            dateEdit1.Location = new System.Drawing.Point(139, 76);
             dateEdit1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             dateEdit1.Name = "dateEdit1";
             dateEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
@@ -118,7 +125,7 @@
             // 
             // searchLookUpEdit1
             // 
-            searchLookUpEdit1.Location = new System.Drawing.Point(461, 19);
+            searchLookUpEdit1.Location = new System.Drawing.Point(139, 27);
             searchLookUpEdit1.Name = "searchLookUpEdit1";
             searchLookUpEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             searchLookUpEdit1.Properties.PopupView = searchLookUpEdit1View;
@@ -135,7 +142,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(280, 83);
+            label2.Location = new System.Drawing.Point(36, 80);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(36, 16);
             label2.TabIndex = 5;
@@ -144,7 +151,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(280, 36);
+            label1.Location = new System.Drawing.Point(36, 33);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(75, 16);
             label1.TabIndex = 4;
@@ -185,6 +192,7 @@
             // 
             // gridControl2
             // 
+            gridControl2.DataSource = bindingSource1;
             gridControl2.Dock = System.Windows.Forms.DockStyle.Bottom;
             gridControl2.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             gridControl2.Location = new System.Drawing.Point(2, 274);
@@ -195,14 +203,60 @@
             gridControl2.TabIndex = 5;
             gridControl2.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView2 });
             // 
+            // bindingSource1
+            // 
+            bindingSource1.DataSource = typeof(DTO.OrderItemDTO);
+            // 
             // gridView2
             // 
+            gridView2.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colName, colDescription, colPrice, colCount });
             gridView2.DetailHeight = 467;
             gridView2.GridControl = gridControl2;
             gridView2.Name = "gridView2";
-            gridView2.OptionsBehavior.Editable = false;
             gridView2.OptionsEditForm.PopupEditFormWidth = 914;
             gridView2.OptionsView.ShowGroupPanel = false;
+            // 
+            // colName
+            // 
+            colName.FieldName = "Name";
+            colName.MinWidth = 25;
+            colName.Name = "colName";
+            colName.OptionsColumn.AllowEdit = false;
+            colName.OptionsColumn.ReadOnly = true;
+            colName.Visible = true;
+            colName.VisibleIndex = 0;
+            colName.Width = 94;
+            // 
+            // colDescription
+            // 
+            colDescription.FieldName = "Description";
+            colDescription.MinWidth = 25;
+            colDescription.Name = "colDescription";
+            colDescription.OptionsColumn.AllowEdit = false;
+            colDescription.OptionsColumn.ReadOnly = true;
+            colDescription.Visible = true;
+            colDescription.VisibleIndex = 1;
+            colDescription.Width = 94;
+            // 
+            // colPrice
+            // 
+            colPrice.FieldName = "Price";
+            colPrice.MinWidth = 25;
+            colPrice.Name = "colPrice";
+            colPrice.OptionsColumn.AllowEdit = false;
+            colPrice.OptionsColumn.ReadOnly = true;
+            colPrice.Visible = true;
+            colPrice.VisibleIndex = 2;
+            colPrice.Width = 94;
+            // 
+            // colCount
+            // 
+            colCount.FieldName = "Count";
+            colCount.MinWidth = 25;
+            colCount.Name = "colCount";
+            colCount.Visible = true;
+            colCount.VisibleIndex = 3;
+            colCount.Width = 94;
             // 
             // gridControl1
             // 
@@ -248,6 +302,7 @@
             ((System.ComponentModel.ISupportInitialize)panelControl1).EndInit();
             panelControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)gridControl2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView2).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
@@ -271,5 +326,10 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraEditors.SearchLookUpEdit searchLookUpEdit1;
         private DevExpress.XtraGrid.Views.Grid.GridView searchLookUpEdit1View;
+        private System.Windows.Forms.BindingSource bindingSource1;
+        private DevExpress.XtraGrid.Columns.GridColumn colName;
+        private DevExpress.XtraGrid.Columns.GridColumn colDescription;
+        private DevExpress.XtraGrid.Columns.GridColumn colPrice;
+        private DevExpress.XtraGrid.Columns.GridColumn colCount;
     }
 }

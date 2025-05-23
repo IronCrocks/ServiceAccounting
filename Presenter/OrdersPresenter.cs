@@ -35,7 +35,7 @@ public class OrdersPresenter : IOrdersPresenter
 
         var ordersDTO = orders.Select(p => new OrderDTO
         {
-            CustomerName = p.productName,
+            CustomerName = p.customerName,
             productName = p.productName,
             Count = p.count,
             Date = p.date,

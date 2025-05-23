@@ -1,6 +1,7 @@
 ﻿using DTO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Forms;
 using View.Base;
 using View.ViewEventArgs;
@@ -9,17 +10,16 @@ namespace ServiceAccounting.View
 {
     public partial class NewOrderForm : Form, INewOrderView
     {
-        private List<OrderItemDTO> _orderItems = new();
+        private BindingList<OrderItemDTO> _orderItems = new();
 
         public NewOrderForm()
         {
             InitializeComponent();
+            bindingSource1.DataSource = _orderItems;
             OnViewLoaded(this, EventArgs.Empty);
         }
 
         public event EventHandler ViewLoaded;
-        public event EventHandler<OrderItemEventArgs> OrderItemAdded;
-        public event EventHandler<OrderItemEventArgs> OrderItemDeleted;
         public event EventHandler<AddOrderEventArgs> BtnAddOrderClicked;
 
         public void LoadData(IEnumerable<CustomerDTO> customers, IEnumerable<ProductDTO> products)
@@ -27,34 +27,19 @@ namespace ServiceAccounting.View
             var bindingSourceCustomers = new BindingSource { DataSource = customers };
             var bindingSourceProducts = new BindingSource { DataSource = products };
 
-            gridControl1.DataSource = bindingSourceProducts;
-            searchLookUpEdit1.Properties.DataSource = bindingSourceCustomers;
+            gridControl1.DataSource = bindingSourceProducts; 
             searchLookUpEdit1.Properties.DisplayMember = "Name";
             searchLookUpEdit1.Properties.ValueMember = "Id";
+            searchLookUpEdit1.Properties.DataSource = bindingSourceCustomers;
+           
+            dateEdit1.EditValue = DateTime.Today;
         }
 
-        // TODO: переписать так, чтобы при добавлении одинакового товара, не создавались новые ордер итемы с уже
-        // добавленным товаром, вместо этого увеличивался счетчик данного товара в соответствующем ордер итеме.
-        public void AddOrderItem(OrderItemDTO item)
-        {
-            _orderItems.Add(item);
-            gridControl2.BeginUpdate();
-            gridControl2.EndUpdate();
-        }
+        public IEnumerable<OrderItemDTO> GetOrderItems() => _orderItems;
 
         protected virtual void OnViewLoaded(object sender, EventArgs e)
         {
             ViewLoaded?.Invoke(this, e);
-        }
-
-        protected virtual void OnOrderItemAdded(object sender, OrderItemEventArgs e)
-        {
-            OrderItemAdded?.Invoke(this, e);
-        }
-
-        protected virtual void OnOrderItemDeleted(object sender, OrderItemEventArgs e)
-        {
-            OrderItemDeleted?.Invoke(this, e);
         }
 
         protected virtual void OnBtnAddOrderClicked(object sender, AddOrderEventArgs e)
@@ -66,7 +51,7 @@ namespace ServiceAccounting.View
         {
             if (gridView1.GetFocusedRow() is not ProductDTO productDTO) throw new InvalidCastException("Wrong data type.");
 
-            OnOrderItemAdded(this, new OrderItemEventArgs(CreateOrderItemDTO()));
+            _orderItems.Add(CreateOrderItemDTO());
 
             OrderItemDTO CreateOrderItemDTO() => new()
             {
@@ -80,13 +65,9 @@ namespace ServiceAccounting.View
 
         private void BtnDeleteOrderItem_Click(object sender, EventArgs e)
         {
-            if (gridView2.GetFocusedRow() is not OrderItemDTO orderItemDTO) throw new InvalidCastException("Wrong data type.");
+            if (gridView2.GetFocusedRow() is not OrderItemDTO orderItemDTO) return;
 
             _orderItems.Remove(orderItemDTO);
-            gridControl2.BeginUpdate();
-            gridControl2.EndUpdate();
-
-            OnOrderItemDeleted(this, new OrderItemEventArgs(orderItemDTO));
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -96,6 +77,11 @@ namespace ServiceAccounting.View
 
         private void BtnAddOrder_Click(object sender, EventArgs e)
         {
+            if (searchLookUpEdit1View.GetFocusedRow() is null)
+            {
+                MessageBox.Show("Выберите покупателя!");
+            }
+
             var selectedCustomer = GetSelectedCustomer();
             var selectedDate = dateEdit1.DateTime;
 
@@ -104,26 +90,6 @@ namespace ServiceAccounting.View
             OnBtnAddOrderClicked(this, new AddOrderEventArgs(_orderItems, selectedCustomer, selectedDate));
             Close();
         }
-
-        private void RefreshGridControl()
-        {
-            gridControl2.BeginUpdate();
-            gridControl2.EndUpdate();
-        }
-
-        //private IEnumerable<object> GetProductRows()
-        //{
-        //    int rowIndex = 0;
-        //    var selectedProducts = new List<object>();
-
-        //    while (gridView2.IsValidRowHandle(rowIndex))
-        //    {
-        //        selectedProducts.Add(gridView2.GetRow(rowIndex));
-        //        rowIndex++;
-        //    }
-
-        //    return selectedProducts;
-        //}
 
         private CustomerDTO GetSelectedCustomer() =>
             searchLookUpEdit1View.GetFocusedRow() is not CustomerDTO customer ?

@@ -28,10 +28,11 @@ public class OrdersService : IOrdersService
 
     public void CreateOrder(Customer customer, IEnumerable<OrderItem> orderItems, DateTime date)
     {
-        using var db = new ApplicationDBContext();
+        using var dbContext = new ApplicationDBContext();
         var order = new Order { CustomerId = customer.Id, Date = date };
         order.OrderItems.AddRange(orderItems);
-        db.SaveChanges();
+        dbContext.Orders.Add(order);
+        dbContext.SaveChanges();
     }
 }
 

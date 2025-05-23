@@ -34,6 +34,8 @@
             btnAddOrder = new DevExpress.XtraEditors.SimpleButton();
             dateEdit1 = new DevExpress.XtraEditors.DateEdit();
             panelControl3 = new DevExpress.XtraEditors.PanelControl();
+            searchLookUpEdit1 = new DevExpress.XtraEditors.SearchLookUpEdit();
+            searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             btnAddOrderItem = new DevExpress.XtraEditors.SimpleButton();
@@ -43,22 +45,20 @@
             gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
             gridControl1 = new DevExpress.XtraGrid.GridControl();
             gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            searchLookUpEdit1 = new DevExpress.XtraEditors.SearchLookUpEdit();
-            searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
             ((System.ComponentModel.ISupportInitialize)panelControl2).BeginInit();
             panelControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dateEdit1.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dateEdit1.Properties.CalendarTimeProperties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelControl3).BeginInit();
             panelControl3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)searchLookUpEdit1.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)searchLookUpEdit1View).BeginInit();
             ((System.ComponentModel.ISupportInitialize)panelControl1).BeginInit();
             panelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridControl2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)searchLookUpEdit1.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)searchLookUpEdit1View).BeginInit();
             SuspendLayout();
             // 
             // panelControl2
@@ -115,6 +115,22 @@
             panelControl3.Name = "panelControl3";
             panelControl3.Size = new System.Drawing.Size(926, 133);
             panelControl3.TabIndex = 4;
+            // 
+            // searchLookUpEdit1
+            // 
+            searchLookUpEdit1.Location = new System.Drawing.Point(461, 19);
+            searchLookUpEdit1.Name = "searchLookUpEdit1";
+            searchLookUpEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            searchLookUpEdit1.Properties.PopupView = searchLookUpEdit1View;
+            searchLookUpEdit1.Size = new System.Drawing.Size(156, 22);
+            searchLookUpEdit1.TabIndex = 6;
+            // 
+            // searchLookUpEdit1View
+            // 
+            searchLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            searchLookUpEdit1View.Name = "searchLookUpEdit1View";
+            searchLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            searchLookUpEdit1View.OptionsView.ShowGroupPanel = false;
             // 
             // label2
             // 
@@ -209,22 +225,6 @@
             gridView1.OptionsEditForm.PopupEditFormWidth = 914;
             gridView1.OptionsView.ShowGroupPanel = false;
             // 
-            // searchLookUpEdit1
-            // 
-            searchLookUpEdit1.Location = new System.Drawing.Point(461, 19);
-            searchLookUpEdit1.Name = "searchLookUpEdit1";
-            searchLookUpEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            searchLookUpEdit1.Properties.PopupView = searchLookUpEdit1View;
-            searchLookUpEdit1.Size = new System.Drawing.Size(156, 22);
-            searchLookUpEdit1.TabIndex = 6;
-            // 
-            // searchLookUpEdit1View
-            // 
-            searchLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            searchLookUpEdit1View.Name = "searchLookUpEdit1View";
-            searchLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
-            searchLookUpEdit1View.OptionsView.ShowGroupPanel = false;
-            // 
             // NewOrderForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -243,14 +243,14 @@
             ((System.ComponentModel.ISupportInitialize)panelControl3).EndInit();
             panelControl3.ResumeLayout(false);
             panelControl3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)searchLookUpEdit1.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)searchLookUpEdit1View).EndInit();
             ((System.ComponentModel.ISupportInitialize)panelControl1).EndInit();
             panelControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)gridControl2).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView2).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)searchLookUpEdit1.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)searchLookUpEdit1View).EndInit();
             ResumeLayout(false);
         }
 

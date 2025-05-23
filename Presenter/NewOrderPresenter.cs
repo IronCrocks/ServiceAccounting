@@ -29,17 +29,18 @@ public class NewOrderPresenter : INewOrderPresenter
         _newOrderView.BtnAddOrderClicked += NewOrderView_BtnAddOrderClicked;
     }
 
-    private void NewOrderView_OrderItemAdded(object? sender, ProductEventArgs e)
+    private void NewOrderView_OrderItemAdded(object? sender, OrderItemEventArgs e)
     {
 
-        var orderItem = CreateOrderItem(e.ProductDTO);
+        //var orderItem = CreateOrderItem(e.OrderItemDTO);
 
 
         //var orderItem = 
         //var product = e.Product as Product ??
         //    throw new InvalidOperationException($"Невозможно привести {e.Product} к типу {nameof(Product)}");
 
-        //_items.Add(e.OrderItemDTO);
+        _newOrderView.AddOrderItem(e.OrderItemDTO);
+        _items.Add(e.OrderItemDTO);
     }
 
     private void NewOrderView_OrderItemDeleted(object? sender, OrderItemEventArgs e)
@@ -92,10 +93,10 @@ public class NewOrderPresenter : INewOrderPresenter
         _newOrderView.LoadData(customersDTO, productsDTO);
     }
 
-    private OrderItem CreateOrderItem(OrderItemDTO orderItemDTO) => new()
-    {
-        OrderId = orderItemDTO.Id,
-        ProductId = orderItemDTO.ProductId,
-        Count = orderItemDTO.Count
-    };
+    //private OrderItem CreateOrderItem(OrderItemDTO orderItemDTO) => new()
+    //{
+    //    OrderId = orderItemDTO.Id,
+    //    ProductId = orderItemDTO.ProductId,
+    //    Count = orderItemDTO.Count
+    //};
 }

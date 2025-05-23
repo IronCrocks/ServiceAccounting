@@ -9,7 +9,8 @@ namespace ServiceAccounting.View
 {
     public partial class NewOrderForm : Form, INewOrderView
     {
-        private List<OrderItemDTO> _products = new();
+        private List<OrderItemDTO> _orderItems = new();
+
         public NewOrderForm()
         {
             InitializeComponent();
@@ -17,7 +18,7 @@ namespace ServiceAccounting.View
         }
 
         public event EventHandler ViewLoaded;
-        public event EventHandler<ProductEventArgs> OrderItemAdded;
+        public event EventHandler<OrderItemEventArgs> OrderItemAdded;
         public event EventHandler<OrderItemEventArgs> OrderItemDeleted;
         public event EventHandler<AddOrderEventArgs> BtnAddOrderClicked;
 
@@ -36,7 +37,7 @@ namespace ServiceAccounting.View
         // добавленным товаром, вместо этого увеличивался счетчик данного товара в соответствующем ордер итеме.
         public void AddOrderItem(OrderItemDTO item)
         {
-            _products.Add(item);
+            _orderItems.Add(item);
             gridControl2.BeginUpdate();
             gridControl2.EndUpdate();
         }
@@ -46,7 +47,7 @@ namespace ServiceAccounting.View
             ViewLoaded?.Invoke(this, e);
         }
 
-        protected virtual void OnOrderItemAdded(object sender, ProductEventArgs e)
+        protected virtual void OnOrderItemAdded(object sender, OrderItemEventArgs e)
         {
             OrderItemAdded?.Invoke(this, e);
         }
@@ -65,14 +66,23 @@ namespace ServiceAccounting.View
         {
             if (gridView1.GetFocusedRow() is not ProductDTO productDTO) throw new InvalidCastException("Wrong data type.");
 
-            OnOrderItemAdded(this, new ProductEventArgs(productDTO));
+            OnOrderItemAdded(this, new OrderItemEventArgs(CreateOrderItemDTO()));
+
+            OrderItemDTO CreateOrderItemDTO() => new()
+            {
+                ProductId = productDTO.Id,
+                Name = productDTO.Name,
+                Description = productDTO.Description,
+                Price = productDTO.Price,
+                Count = 1
+            };
         }
 
         private void BtnDeleteOrderItem_Click(object sender, EventArgs e)
         {
             if (gridView2.GetFocusedRow() is not OrderItemDTO orderItemDTO) throw new InvalidCastException("Wrong data type.");
 
-            _products.Remove(orderItemDTO);
+            _orderItems.Remove(orderItemDTO);
             gridControl2.BeginUpdate();
             gridControl2.EndUpdate();
 
@@ -91,8 +101,14 @@ namespace ServiceAccounting.View
 
             if (selectedCustomer is null) return;
 
-            OnBtnAddOrderClicked(this, new AddOrderEventArgs(_products, selectedCustomer, selectedDate));
+            OnBtnAddOrderClicked(this, new AddOrderEventArgs(_orderItems, selectedCustomer, selectedDate));
             Close();
+        }
+
+        private void RefreshGridControl()
+        {
+            gridControl2.BeginUpdate();
+            gridControl2.EndUpdate();
         }
 
         //private IEnumerable<object> GetProductRows()

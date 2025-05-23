@@ -53,7 +53,13 @@ public class CustomersPresenter : ICustomersPresenter
     private void LoadViewData()
     {
         var customers = _customersService.GetCustomers();
-        var customersDTO = customers.Select(x => new CustomerDTO { Id = x.Id, Name = x.Name, Age = x.Age, TotalSum = x.TotalSum }).ToList();
+        var customersDTO = customers.Select(x => new CustomerDTO
+        {
+            Id = x.Id,
+            Name = x.Name,
+            Age = x.Age,
+            TotalSum = x.TotalSum
+        }).ToList();
         var bindingList = new BindingList<CustomerDTO>(customersDTO);
         _customersView.LoadCustomers(bindingList);
     }

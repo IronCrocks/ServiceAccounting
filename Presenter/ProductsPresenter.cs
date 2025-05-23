@@ -51,6 +51,11 @@ public class ProductsPresenter : IProductsPresenter
 
     private void ProductsView_ViewLoaded(object? sender, EventArgs e)
     {
+        LoadViewData();
+    }
+
+    private void LoadViewData()
+    {
         var products = _productsService.GetProducts();
         var productsDTO = products.Select(p => new ProductDTO
         {

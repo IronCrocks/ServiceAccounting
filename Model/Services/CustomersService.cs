@@ -6,7 +6,7 @@ namespace Model.Services;
 
 public class CustomersService : ICustomersService
 {
-    public IEnumerable<(int Id, string Name, int Age, int TotalSum)> GetCustomers()
+    public IEnumerable<CustomerOrderSummary> GetCustomers()
     {
         using var dbContext = new ApplicationDBContext();
 
@@ -18,13 +18,14 @@ public class CustomersService : ICustomersService
                      join product in dbContext.Products on orderItemCustomer.ProductId equals product.Id into gs
                      from g in gs.DefaultIfEmpty()
                      group (g.Price * orderItemCustomer.Count) by new { customer.Id, customer.Name, customer.Age } into x
-                     select new ValueTuple<int, string, int, int>
-                     (
-                         x.Key.Id,
-                         x.Key.Name,
-                         x.Key.Age,
-                         x.Sum()
-                     );
+                     select new CustomerOrderSummary()
+                     {
+                         Age = x.Key.Age,
+                         Id = x.Key.Id,
+                         Name = x.Key.Name,
+                         TotalSum = x.Sum()
+                     };
+
         return result.ToList();
     }
 

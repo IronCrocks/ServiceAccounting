@@ -8,5 +8,5 @@ public interface ICustomersService : IService
     void DeleteCustomer(Customer customer);
     void UpdateCustomer(Customer customer);
     Customer? GetCustomerById(int id);
-    IEnumerable<(int Id, string Name, int Age, int TotalSum)> GetCustomers();
+    IEnumerable<CustomerOrderSummary> GetCustomers();
 }

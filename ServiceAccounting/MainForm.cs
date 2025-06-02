@@ -22,7 +22,7 @@ public partial class MainForm : DevExpress.XtraEditors.XtraForm, IMainForm
         InitializeComponent();
     }
 
-    // TODO: переделать через Container?
+    // TODO: переделать. Думаю существует более элегантный способ.
     private void btnCustomers_Click(object sender, EventArgs e)
     {
         panelControl2.Controls.Remove(_view);

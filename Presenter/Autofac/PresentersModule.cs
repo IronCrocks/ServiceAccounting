@@ -11,6 +11,7 @@ public class PresentersModule : Module
         builder.RegisterType<ProductsPresenter>().As<IProductsPresenter>();
         builder.RegisterType<OrdersPresenter>().As<IOrdersPresenter>();
         builder.RegisterType<NewOrderPresenter>().As<INewOrderPresenter>();
+        builder.RegisterType<ReportPresenter>().As<IReportPresenter>();
         builder.RegisterType<MainFormPresenter>().As<IMainFormPresenter>();
     }
 }

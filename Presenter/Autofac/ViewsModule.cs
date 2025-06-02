@@ -2,6 +2,7 @@
 using ServiceAccounting.View;
 using ServiceAccounting;
 using View.Base;
+using View;
 
 namespace Presenter.Autofac;
 
@@ -13,6 +14,7 @@ public class ViewsModule : Module
         builder.RegisterType<ProductsView>().As<IProductsView>().SingleInstance();
         builder.RegisterType<OrdersView>().As<IOrdersView>().SingleInstance();
         builder.RegisterType<NewOrderForm>().As<INewOrderView>().SingleInstance();
+        builder.RegisterType<ReportForm>().As<IReportForm>().SingleInstance();
         builder.RegisterType<MainForm>().As<IMainForm>().SingleInstance();
     }
 }

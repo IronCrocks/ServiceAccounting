@@ -26,6 +26,25 @@ public class OrdersService : IOrdersService
         return result.ToList();
     }
 
+    public IEnumerable<OrderItemData> GetOrders(Customer customer)
+    {
+        using var db = new ApplicationDBContext();
+
+        var ordersData = db.Customers
+            .Where(c => c.Id == customer.Id)
+            .SelectMany(c => c.Orders)
+            .SelectMany(o => o.OrderItems)
+            .Select(oi => new OrderItemData
+            {
+                Date = oi.Order.Date,
+                Name = oi.Product.Name,
+                Count = oi.Count,
+                Price = oi.Product.Price
+            }).ToList();
+
+        return ordersData;
+    }
+
     public void CreateOrder(Customer customer, IEnumerable<OrderItem> orderItems, DateTime date)
     {
         using var dbContext = new ApplicationDBContext();

@@ -80,12 +80,11 @@ namespace ServiceAccounting.View
             if (searchLookUpEdit1View.GetFocusedRow() is null)
             {
                 MessageBox.Show("Выберите покупателя!");
+                return;
             }
 
             var selectedCustomer = GetSelectedCustomer();
             var selectedDate = dateEdit1.DateTime;
-
-            if (selectedCustomer is null) return;
 
             OnBtnAddOrderClicked(this, new AddOrderEventArgs(_orderItems, selectedCustomer, selectedDate));
             Close();

@@ -7,18 +7,21 @@ namespace Presenter;
 public class MainFormPresenter : ApplicationContext, IMainFormPresenter
 {
     private readonly IMainForm _mainForm;
+    private readonly IReportPresenter _reportPresenter;
     private readonly INewOrderPresenter _newOrderPresenter;
     private readonly IOrdersPresenter _ordersPresenter;
     private readonly IProductsPresenter _productsPresenter;
     private readonly ICustomersPresenter _customersPresenter;
 
     public MainFormPresenter(IMainForm mainForm,
+        IReportPresenter reportPresenter,
         INewOrderPresenter newOrderPresenter,
         IOrdersPresenter ordersPresenter,
         IProductsPresenter productsPresenter,
         ICustomersPresenter customersPresenter)
     {
         _mainForm = mainForm;
+        _reportPresenter = reportPresenter;
         _newOrderPresenter = newOrderPresenter;
         _ordersPresenter = ordersPresenter;
         _productsPresenter = productsPresenter;

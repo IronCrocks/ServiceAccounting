@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using DevExpress.XtraReports.UI;
 using DTO;
+using View;
 using View.Base;
 
 namespace ServiceAccounting.View;
@@ -10,11 +10,13 @@ namespace ServiceAccounting.View;
 public partial class OrdersView : UserControl, IOrdersView
 {
     private readonly INewOrderView _newOrderForm;
+    private readonly IReportForm _reportForm;
 
-    public OrdersView(INewOrderView newOrderForm)
+    public OrdersView(INewOrderView newOrderForm, IReportForm reportForm)
     {
         InitializeComponent();
         _newOrderForm = newOrderForm ?? throw new ArgumentNullException(nameof(newOrderForm));
+        _reportForm = reportForm ?? throw new ArgumentNullException(nameof(reportForm));
     }
 
     public event EventHandler ViewLoaded;
@@ -60,35 +62,9 @@ public partial class OrdersView : UserControl, IOrdersView
 
     private void BtnReport_Click(object sender, EventArgs e)
     {
-        //var report = ReportGenerator.GenerateReport(gridView1);
-        //string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "report.docx");
-        //var report = new Report2();
-        //report.ExportToDocx(path);
-
-
-        using ApplicationContext db = new ApplicationContext();
-
-        //var result = from customer in db.Customers
-        //             join purchase in db.Purchases on customer.Id equals purchase.CustomerId
-        //             join product in db.Products on purchase.ProductId equals product.Id
-        //             select new
-        //             {
-        //                 customer.Name,
-        //                 productName = product.Name,
-        //                 purchase.Count,
-        //                 product.Price,
-        //                 purchase.Date
-        //             };
-
-        var report1 = new Report2();
-        report1.Parameters["parameter1"].Value = 1;
-        //var tt = report1.DataSource as SqlDataSource;
-        //var y = tt.Queries;
-        var printTool = new ReportPrintTool(report1);
-        printTool.ShowPreview();
-
-        //string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "report.docx");
-        //report4.ExportToDocx(path);
+        _reportForm.Load();
+        if (_reportForm is not ReportForm form) throw new InvalidOperationException();
+        form.ShowDialog();
     }
 
     void IOrdersView.Load()

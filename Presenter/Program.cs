@@ -31,33 +31,11 @@ internal static class Program
 
         using var scope = _container.BeginLifetimeScope();
 
-        //var newOrderForm = new NewOrderForm();
-
-        //var customersView = new CustomersView();
-        //var productsView = new ProductsView();
-        //var ordersView = new OrdersView(newOrderForm);
-
-        //var customersService = new CustomersService();
-        //var productsService = new ProductsService();
-        //var ordersService = new OrdersService();
-
-        //var customersPresenter = scope.Resolve<ICustomersPresenter>();
-        //var productsPresenter = scope.Resolve<IProductsPresenter>();
-        //var ordersPresenter = scope.Resolve<IOrdersPresenter>();
-        //var newOrderPresenter = scope.Resolve<INewOrderPresenter>();
-        //var mainForm = scope.Resolve<IMainForm>();
-
         if (scope.Resolve<IMainFormPresenter>() is not ApplicationContext mainFormPresenter)
         {
             throw new InvalidOperationException();
         }
 
         Application.Run(mainFormPresenter);
-
-        //Application.Run(new MainFormPresenter(new MainForm(customersView, productsView, ordersView),
-        //    new NewOrderPresenter(newOrderForm, ordersService, customersService, productsService),
-        //    new OrdersPresenter(ordersView, ordersService),
-        //    new ProductsPresenter(productsView, productsService),
-        //    new CustomersPresenter(customersView, customersService)));
     }
 }

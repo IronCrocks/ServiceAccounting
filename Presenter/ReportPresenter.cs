@@ -1,6 +1,6 @@
 ﻿using DevExpress.XtraReports.UI;
 using DTO;
-using Model.Data;
+using Model.Projections;
 using Model.Services.Base;
 using Presenter.Base;
 using System.Drawing;
@@ -50,7 +50,7 @@ namespace Presenter
             var printTool = new ReportPrintTool(report);
             printTool.ShowPreview();
         }
-        public static XtraReport CreateReport(List<OrderItemData> data)
+        public static XtraReport CreateReport(List<CustomerOrderItem> data)
         {
             var report = new XtraReport();
             report.DataSource = data;

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Model.Data;
+using Model.Entites;
 
 namespace ServiceAccounting;
 

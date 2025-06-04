@@ -1,5 +1,5 @@
 ﻿using DTO;
-using Model.Data;
+using Model.Entites;
 using Model.Services.Base;
 using Presenter.Base;
 using System.ComponentModel;

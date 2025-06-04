@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DTO;
-using Model.Data;
+using Model.Entites;
 using System;
 using System.Collections.Generic;
 using System.Linq;

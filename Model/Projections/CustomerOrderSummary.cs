@@ -1,4 +1,4 @@
-﻿namespace Model.Data
+﻿namespace Model.Projections
 {
     public class CustomerOrderSummary
     {

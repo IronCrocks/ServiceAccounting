@@ -1,4 +1,4 @@
-﻿using Model.Data;
+﻿using Model.Entites;
 
 namespace Model.Services.Base;
 

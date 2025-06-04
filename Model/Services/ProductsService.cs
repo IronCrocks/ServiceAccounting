@@ -1,4 +1,4 @@
-﻿using Model.Data;
+﻿using Model.Entites;
 using Model.Services.Base;
 using ServiceAccounting;
 

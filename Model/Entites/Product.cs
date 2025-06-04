@@ -1,4 +1,4 @@
-﻿namespace Model.Data;
+﻿namespace Model.Entites;
 
 public class Product
 {

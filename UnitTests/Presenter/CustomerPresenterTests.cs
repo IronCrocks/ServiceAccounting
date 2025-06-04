@@ -1,5 +1,6 @@
 using DTO;
-using Model.Data;
+using Model.Entites;
+using Model.Projections;
 using Model.Services.Base;
 using Moq;
 using Presenter;

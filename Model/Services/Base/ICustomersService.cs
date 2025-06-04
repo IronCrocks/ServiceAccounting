@@ -1,4 +1,5 @@
-﻿using Model.Data;
+﻿using Model.Entites;
+using Model.Projections;
 
 namespace Model.Services.Base;
 

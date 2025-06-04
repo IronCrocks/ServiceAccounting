@@ -1,5 +1,6 @@
 ﻿using DTO;
-using Model.Data;
+using DTO.Entities;
+using Model.Entites;
 using Model.Services.Base;
 using Presenter.Base;
 using View.Base;

@@ -1,4 +1,5 @@
-﻿using Model.Data;
+﻿using Model.Entites;
+using Model.Projections;
 using Model.Services.Base;
 using ServiceAccounting;
 
@@ -26,7 +27,8 @@ public class OrdersService : IOrdersService
         return result.ToList();
     }
 
-    public IEnumerable<OrderItemData> GetOrders(Customer customer)
+
+    public IEnumerable<CustomerOrderItem> GetOrders(Customer customer)
     {
         using var db = new ApplicationDBContext();
 
@@ -34,7 +36,7 @@ public class OrdersService : IOrdersService
             .Where(c => c.Id == customer.Id)
             .SelectMany(c => c.Orders)
             .SelectMany(o => o.OrderItems)
-            .Select(oi => new OrderItemData
+            .Select(oi => new CustomerOrderItem
             {
                 Date = oi.Order.Date,
                 Name = oi.Product.Name,

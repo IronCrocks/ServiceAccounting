@@ -1,6 +1,6 @@
-﻿namespace Model.Data
+﻿namespace Model.Projections
 {
-    public class OrderItemData
+    public class CustomerOrderItem
     {
         public DateTime Date { get; set; }
         public string Name { get; set; } = string.Empty;

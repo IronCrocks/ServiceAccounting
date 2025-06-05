@@ -17,4 +17,10 @@
     <ProjectReference Include="..\ServiceAccounting\View.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="lite1.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -15,8 +15,7 @@ public class ApplicationDBContext : DbContext
         //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;" +
         //    "Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
         
-        var path = Path.Combine(AppContext.BaseDirectory, "lite1.db");
-        optionsBuilder.UseSqlite($"Data Source={path}");
+        optionsBuilder.UseSqlite($"Data Source=lite1.db");
         
         //optionsBuilder.UseSqlServer("Data Source=DESKTOP-Q9PBDCE;Integrated Security=True;Connect Timeout=30;" +
         //    "Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");

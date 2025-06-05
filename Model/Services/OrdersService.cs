@@ -11,10 +11,13 @@ public class OrdersService : IOrdersService
     {
         using var db = new ApplicationDBContext();
 
+        var lastmonth = DateTime.Now.AddMonths(-1);
+
         var result = from customer in db.Customers
                      join order in db.Orders on customer.Id equals order.CustomerId
                      join orderItem in db.OrderItems on order.Id equals orderItem.OrderId
                      join product in db.Products on orderItem.ProductId equals product.Id
+                     where order.Date >= lastmonth
                      select new OrderSummary
                      {
                          CustomerName = customer.Name,

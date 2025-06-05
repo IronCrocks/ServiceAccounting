@@ -27,11 +27,13 @@ namespace ServiceAccounting.View
             var bindingSourceCustomers = new BindingSource { DataSource = customers };
             var bindingSourceProducts = new BindingSource { DataSource = products };
 
-            gridControl1.DataSource = bindingSourceProducts; 
+            _orderItems.Clear();
+
+            gridControl1.DataSource = bindingSourceProducts;
             searchLookUpEdit1.Properties.DisplayMember = "Name";
             searchLookUpEdit1.Properties.ValueMember = "Id";
             searchLookUpEdit1.Properties.DataSource = bindingSourceCustomers;
-           
+
             dateEdit1.EditValue = DateTime.Today;
         }
 

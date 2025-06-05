@@ -7,4 +7,5 @@ public class OrderDTO
     public int Count { get; set; }
     public int Price { get; set; }
     public DateTime Date { get; set; }
+    public int TotalPrice => Count * Price;
 }

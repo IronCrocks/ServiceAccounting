@@ -11,6 +11,7 @@ public partial class OrdersView : UserControl, IOrdersView
 {
     private readonly INewOrderView _newOrderForm;
     private readonly IReportForm _reportForm;
+    private IEnumerable<OrderDTO> _orders;
 
     public OrdersView(INewOrderView newOrderForm, IReportForm reportForm)
     {
@@ -24,9 +25,10 @@ public partial class OrdersView : UserControl, IOrdersView
 
     public void UpdateView(IEnumerable<OrderDTO> orders)
     {
-        var bindingSource = new BindingSource { DataSource = orders };
-        pivotGridControl1.DataSource = bindingSource;
-        UpdatePivotGrid();
+        _orders = orders ?? throw new ArgumentNullException(nameof(orders));
+        orderDTOBindingSource.DataSource = _orders;
+        pivotGridControl1.DataSource = orderDTOBindingSource;
+        pivotGridControl1.RefreshData();
     }
 
     protected virtual void OnViewLoaded(object sender, EventArgs e)
@@ -39,19 +41,7 @@ public partial class OrdersView : UserControl, IOrdersView
         btnAddOrderClicked?.Invoke(sender, e);
     }
 
-    private void UpdatePivotGrid()
-    {
-        pivotGridControl1.RetrieveFields();
-        var fields = pivotGridControl1.Fields;
-        fields[0].Area = DevExpress.XtraPivotGrid.PivotArea.ColumnArea;
-        fields[1].Area = DevExpress.XtraPivotGrid.PivotArea.RowArea;
-        fields[2].Area = DevExpress.XtraPivotGrid.PivotArea.DataArea;
-        fields[3].Area = DevExpress.XtraPivotGrid.PivotArea.DataArea;
-        fields[4].Area = DevExpress.XtraPivotGrid.PivotArea.ColumnArea;
-        pivotGridControl1.BeginUpdate();
-        pivotGridControl1.EndUpdate();
-    }
-
+    // По хорошему здесь конечно нужно создавать форму, а не перезагружать. Возможно при помощи фабрики.
     private void BtnAddOrder_Click(object sender, EventArgs e)
     {
         _newOrderForm.Load();
@@ -60,6 +50,7 @@ public partial class OrdersView : UserControl, IOrdersView
         OnBtnAddOrderClicked(this, EventArgs.Empty);
     }
 
+    // По хорошему здесь конечно нужно создавать форму, а не перезагружать. Возможно при помощи фабрики.
     private void BtnReport_Click(object sender, EventArgs e)
     {
         _reportForm.Load();

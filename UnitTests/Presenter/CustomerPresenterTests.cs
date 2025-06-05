@@ -49,6 +49,8 @@ namespace UnitTests.Presenter
             };
 
             _serviceMock.Setup(s => s.GetCustomers()).Returns(customers);
+            _mapperMock.Setup(m => m.Map<CustomerDTO>(It.IsAny<CustomerOrderSummary>()))
+                            .Returns((CustomerOrderSummary c) => new CustomerDTO { Id = c.Id, Name = c.Name, Age = c.Age });
 
             _viewMock.Raise(v => v.ViewLoaded += null, EventArgs.Empty);
 
@@ -63,6 +65,8 @@ namespace UnitTests.Presenter
             var args = new CustomerEventArgs(dto);
 
             _serviceMock.Setup(s => s.AddCustomer(It.IsAny<Customer>())).Returns(42);
+            _mapperMock.Setup(m => m.Map<Customer>(It.IsAny<CustomerDTO>()))
+                .Returns((CustomerDTO c) => new Customer { Name = c.Name, Age = c.Age });
 
             _viewMock.Raise(v => v.CustomerAdded += null, null, args);
 

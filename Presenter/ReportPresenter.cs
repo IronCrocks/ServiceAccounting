@@ -24,6 +24,7 @@ namespace Presenter
             _ordersService = ordersService ?? throw new ArgumentNullException(nameof(ordersService));
             _customersService = customersService ?? throw new ArgumentNullException(nameof(customersService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+
             _view.ViewLoaded += OnViewLoaded;
             _view.btnReportClicked += OnBtnReportClicked;
         }
@@ -80,6 +81,17 @@ namespace Presenter
 
             groupHeader.Controls.Add(groupLabel);
 
+            // === ШАПКА СТРОК ===
+            var pageHeader = new PageHeaderBand { HeightF = labelHeight };
+            report.Bands.Add(pageHeader);
+
+            float xHeader = 0;
+            pageHeader.Controls.Add(CreateHeaderLabel("Дата", xHeader, columnWidth, labelHeight)); xHeader += columnWidth;
+            pageHeader.Controls.Add(CreateHeaderLabel("Товар", xHeader, columnWidth, labelHeight)); xHeader += columnWidth;
+            pageHeader.Controls.Add(CreateHeaderLabel("Кол-во", xHeader, columnWidth, labelHeight)); xHeader += columnWidth;
+            pageHeader.Controls.Add(CreateHeaderLabel("Цена", xHeader, columnWidth, labelHeight)); xHeader += columnWidth;
+            pageHeader.Controls.Add(CreateHeaderLabel("Итого", xHeader, columnWidth, labelHeight));
+
             var detail = new DetailBand { HeightF = labelHeight };
             report.Bands.Add(detail);
 
@@ -88,6 +100,7 @@ namespace Presenter
             detail.Controls.Add(CreateBoundLabel("Name", x, columnWidth, labelHeight)); x += columnWidth;
             detail.Controls.Add(CreateBoundLabel("Count", x, columnWidth, labelHeight)); x += columnWidth;
             detail.Controls.Add(CreateBoundLabel("Price", x, columnWidth, labelHeight)); x += columnWidth;
+            detail.Controls.Add(CreateBoundLabel("Total", x, columnWidth, labelHeight)); x += columnWidth;
 
             return report;
         }
@@ -117,6 +130,18 @@ namespace Presenter
                 {
                     new ExpressionBinding("BeforePrint", "Text", "FormatString('{0:dd.MM.yyyy}', [Date])")
                 }
+            };
+        }
+        private static XRLabel CreateHeaderLabel(string text, float x, float width, float height)
+        {
+            return new XRLabel
+            {
+                BoundsF = new RectangleF(x, 0, width, height),
+                Borders = DevExpress.XtraPrinting.BorderSide.All,
+                Font = new Font("Arial", 9, FontStyle.Bold),
+                BackColor = Color.LightGray,
+                TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter,
+                Text = text
             };
         }
     }

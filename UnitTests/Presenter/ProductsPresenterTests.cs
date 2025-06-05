@@ -35,6 +35,8 @@ namespace UnitTests.Presenter
             };
 
             _serviceMock.Setup(s => s.GetProducts()).Returns(products);
+            _mapperMock.Setup(m => m.Map<ProductDTO>(It.IsAny<Product>()))
+                .Returns((Product p) => new ProductDTO { Id = p.Id, Name = p.Name, Description = p.Description, Price = p.Price });
 
             _viewMock.Raise(v => v.ViewLoaded += null, EventArgs.Empty);
 

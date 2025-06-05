@@ -1,4 +1,5 @@
-﻿using DTO;
+﻿using AutoMapper;
+using DTO;
 using Model.Services.Base;
 using Presenter.Base;
 using View.Base;
@@ -9,12 +10,13 @@ public class OrdersPresenter : IOrdersPresenter
 {
     private readonly IOrdersView _ordersView;
     private readonly IOrdersService _ordersService;
+    private readonly IMapper _mapper;
 
-    public OrdersPresenter(IOrdersView ordersView, IOrdersService ordersService)
+    public OrdersPresenter(IOrdersView ordersView, IOrdersService ordersService, IMapper mapper)
     {
         _ordersView = ordersView ?? throw new ArgumentNullException(nameof(ordersView));
         _ordersService = ordersService ?? throw new ArgumentNullException(nameof(ordersService));
-
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _ordersView.ViewLoaded += OrdersView_ViewLoaded;
         _ordersView.btnAddOrderClicked += OrdersView_btnAddOrderClicked;
     }
@@ -32,16 +34,7 @@ public class OrdersPresenter : IOrdersPresenter
     private void UpdateViewData()
     {
         var orders = _ordersService.GetOrders();
-
-        var ordersDTO = orders.Select(p => new OrderDTO
-        {
-            CustomerName = p.customerName,
-            productName = p.productName,
-            Count = p.count,
-            Date = p.date,
-            Price = p.price
-        }).ToList();
-
+        var ordersDTO = orders.Select(_mapper.Map<OrderDTO>).ToList();
         _ordersView.UpdateView(ordersDTO);
     }
 }

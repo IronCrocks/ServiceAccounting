@@ -39,9 +39,5 @@ public class ProductsService : IProductsService
         dbContext.Products.Remove(product);
         dbContext.SaveChanges();
     }
-
-    private Product GetProductByIndex(ApplicationDBContext dbContext, int productIndex) => dbContext.Products.FirstOrDefault(p => p.Id == productIndex)
-            ?? throw new InvalidOperationException($"Продукта с индексом {productIndex} нет в базе данных.");
-
 }
 

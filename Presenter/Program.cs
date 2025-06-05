@@ -1,14 +1,13 @@
 ﻿using Autofac;
 using System.Windows.Forms;
 using Presenter.Autofac;
-using View.Base;
 using Presenter.Base;
 
 namespace ServiceAccounting;
 
 internal static class Program
 {
-    private static IContainer _container;
+    private static IContainer? _container;
 
     /// <summary>
     /// The main entry point for the application.
@@ -27,6 +26,7 @@ internal static class Program
         builder.RegisterModule(new ServicesModule());
         builder.RegisterModule(new ViewsModule());
         builder.RegisterModule(new PresentersModule());
+        builder.RegisterModule(new AutoMapperModule());
         _container = builder.Build();
 
         using var scope = _container.BeginLifetimeScope();

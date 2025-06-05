@@ -7,7 +7,7 @@ namespace Model.Services;
 
 public class OrdersService : IOrdersService
 {
-    public IEnumerable<(string customerName, string productName, int count, int price, DateTime date)> GetOrders()
+    public IEnumerable<OrderSummary> GetOrders()
     {
         using var db = new ApplicationDBContext();
 
@@ -15,18 +15,17 @@ public class OrdersService : IOrdersService
                      join order in db.Orders on customer.Id equals order.CustomerId
                      join orderItem in db.OrderItems on order.Id equals orderItem.OrderId
                      join product in db.Products on orderItem.ProductId equals product.Id
-                     select new ValueTuple<string, string, int, int, DateTime>
-                     (
-                         customer.Name,
-                         product.Name,
-                         orderItem.Count,
-                         product.Price,
-                         order.Date
-                     );
+                     select new OrderSummary
+                     {
+                         CustomerName = customer.Name,
+                         ProductName = product.Name,
+                         Count = orderItem.Count,
+                         Price = product.Price,
+                         Date = order.Date
+                     };
 
         return result.ToList();
     }
-
 
     public IEnumerable<CustomerOrderItem> GetOrders(Customer customer)
     {

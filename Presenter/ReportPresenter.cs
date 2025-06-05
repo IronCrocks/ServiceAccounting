@@ -1,5 +1,7 @@
-﻿using DevExpress.XtraReports.UI;
+﻿using AutoMapper;
+using DevExpress.XtraReports.UI;
 using DTO;
+using Model.Entites;
 using Model.Projections;
 using Model.Services.Base;
 using Presenter.Base;
@@ -14,37 +16,28 @@ namespace Presenter
         private readonly IReportForm _view;
         private readonly IOrdersService _ordersService;
         private readonly ICustomersService _customersService;
+        private readonly IMapper _mapper;
 
-        public ReportPresenter(IReportForm view, IOrdersService ordersService, ICustomersService customersService)
+        public ReportPresenter(IReportForm view, IOrdersService ordersService, ICustomersService customersService, IMapper mapper)
         {
             _view = view ?? throw new ArgumentNullException(nameof(view));
             _ordersService = ordersService ?? throw new ArgumentNullException(nameof(ordersService));
             _customersService = customersService ?? throw new ArgumentNullException(nameof(customersService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _view.ViewLoaded += OnViewLoaded;
             _view.btnReportClicked += OnBtnReportClicked;
         }
         private void OnViewLoaded(object sender, EventArgs e)
         {
             var customers = _customersService.GetCustomers();
-            var customersDTO = customers.Select(c => new CustomerDTO
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Age = c.Age
-            }).ToList();
+            var customersDTO = customers.Select(_mapper.Map<CustomerDTO>).ToList();
             _view.LoadData(customersDTO);
         }
         private void OnBtnReportClicked(object sender, CustomerEventArgs e)
         {
             ArgumentNullException.ThrowIfNull(e);
 
-            var customer = new Customer
-            {
-                Id = e.Customer.Id,
-                Name = e.Customer.Name,
-                Age = e.Customer.Age
-            };
-
+            var customer = _mapper.Map<Customer>(e.Customer);
             var ordersData = _ordersService.GetOrders(customer);
             var report = CreateReport(ordersData.ToList());
             var printTool = new ReportPrintTool(report);
@@ -64,6 +57,7 @@ namespace Presenter
                 FieldType = FieldType.String,
                 Expression = "FormatString('{0:yyyy-MM}', [Date])"
             };
+
             report.CalculatedFields.Add(monthKey);
             // === ГРУППИРОВКА ПО МЕСЯЦУ ===
             var groupHeader = new GroupHeaderBand { HeightF = labelHeight };
@@ -83,9 +77,9 @@ namespace Presenter
                     new ExpressionBinding("BeforePrint", "Text", "FormatString('{0:MMMM yyyy}', [Date])")
                 }
             };
+
             groupHeader.Controls.Add(groupLabel);
 
-            // === DETAIL ===
             var detail = new DetailBand { HeightF = labelHeight };
             report.Bands.Add(detail);
 

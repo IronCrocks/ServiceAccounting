@@ -1,3 +1,4 @@
+using AutoMapper;
 using DTO;
 using Model.Entites;
 using Model.Projections;
@@ -15,6 +16,7 @@ namespace UnitTests.Presenter
     {
         private Mock<ICustomersView> _viewMock;
         private Mock<ICustomersService> _serviceMock;
+        private Mock<IMapper> _mapperMock;
         private CustomersPresenter _presenter;
 
         [SetUp]
@@ -22,19 +24,20 @@ namespace UnitTests.Presenter
         {
             _viewMock = new Mock<ICustomersView>();
             _serviceMock = new Mock<ICustomersService>();
-            _presenter = new CustomersPresenter(_viewMock.Object, _serviceMock.Object);
+            _mapperMock = new Mock<IMapper>();
+            _presenter = new CustomersPresenter(_viewMock.Object, _serviceMock.Object, _mapperMock.Object);
         }
 
         [Test]
         public void Constructor_NullView_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new CustomersPresenter(null, _serviceMock.Object));
+            Assert.Throws<ArgumentNullException>(() => new CustomersPresenter(null, _serviceMock.Object, _mapperMock.Object));
         }
 
         [Test]
         public void Constructor_NullService_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => new CustomersPresenter(_viewMock.Object, null));
+            Assert.Throws<ArgumentNullException>(() => new CustomersPresenter(_viewMock.Object, null, _mapperMock.Object));
         }
 
         [Test]

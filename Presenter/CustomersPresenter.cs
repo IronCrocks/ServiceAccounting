@@ -1,4 +1,5 @@
-﻿using DTO;
+﻿using AutoMapper;
+using DTO;
 using Model.Entites;
 using Model.Services.Base;
 using Presenter.Base;
@@ -12,11 +13,13 @@ public class CustomersPresenter : ICustomersPresenter
 {
     private readonly ICustomersView _customersView;
     private readonly ICustomersService _customersService;
+    private readonly IMapper _mapper;
 
-    public CustomersPresenter(ICustomersView customersView, ICustomersService customersService)
+    public CustomersPresenter(ICustomersView customersView, ICustomersService customersService, IMapper mapper)
     {
         _customersView = customersView ?? throw new ArgumentNullException(nameof(customersView));
         _customersService = customersService ?? throw new ArgumentNullException(nameof(customersService));
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
         _customersView.ViewLoaded += CustomersView_ViewLoaded;
         _customersView.CustomerAdded += CustomersView_CustomerAdded;
@@ -26,7 +29,7 @@ public class CustomersPresenter : ICustomersPresenter
 
     private void CustomersView_CustomerAdded(object? sender, CustomerEventArgs e)
     {
-        var customer = CreateCustomer(e.Customer);
+        var customer = _mapper.Map<Customer>(e.Customer);
         int customerId = _customersService.AddCustomer(customer);
         e.Customer.Id = customerId;
     }
@@ -53,22 +56,8 @@ public class CustomersPresenter : ICustomersPresenter
     private void LoadViewData()
     {
         var customers = _customersService.GetCustomers();
-        var customersDTO = customers.Select(x => new CustomerDTO
-        {
-            Id = x.Id,
-            Name = x.Name,
-            Age = x.Age,
-            TotalSum = x.TotalSum
-        }).ToList();
+        var customersDTO = customers.Select(_mapper.Map<CustomerDTO>).ToList();
         var bindingList = new BindingList<CustomerDTO>(customersDTO);
         _customersView.LoadCustomers(bindingList);
     }
-
-    private Customer CreateCustomer(CustomerDTO customerDTO) => new()
-    {
-        Id = customerDTO.Id,
-        Name = customerDTO.Name,
-        Age = customerDTO.Age
-    };
 }
-

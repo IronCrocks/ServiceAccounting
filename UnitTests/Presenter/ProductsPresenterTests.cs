@@ -1,4 +1,5 @@
-﻿using DTO;
+﻿using AutoMapper;
+using DTO;
 using Model.Entites;
 using Model.Services.Base;
 using Moq;
@@ -13,6 +14,7 @@ namespace UnitTests.Presenter
     {
         private Mock<IProductsView> _viewMock;
         private Mock<IProductsService> _serviceMock;
+        private Mock<IMapper> _mapperMock;
         private ProductsPresenter _presenter;
 
         [SetUp]
@@ -20,7 +22,8 @@ namespace UnitTests.Presenter
         {
             _viewMock = new Mock<IProductsView>();
             _serviceMock = new Mock<IProductsService>();
-            _presenter = new ProductsPresenter(_viewMock.Object, _serviceMock.Object);
+            _mapperMock = new Mock<IMapper>();
+            _presenter = new ProductsPresenter(_viewMock.Object, _serviceMock.Object, _mapperMock.Object);
         }
 
         [Test]

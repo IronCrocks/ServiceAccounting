@@ -1,4 +1,5 @@
-﻿using DTO;
+﻿using AutoMapper;
+using DTO;
 using Model.Entites;
 using Model.Services.Base;
 using Presenter.Base;
@@ -12,11 +13,13 @@ public class ProductsPresenter : IProductsPresenter
 {
     private readonly IProductsView _productsView;
     private readonly IProductsService _productsService;
+    private readonly IMapper _mapper;
 
-    public ProductsPresenter(IProductsView productsView, IProductsService productsService)
+    public ProductsPresenter(IProductsView productsView, IProductsService productsService, IMapper mapper)
     {
         _productsView = productsView ?? throw new ArgumentNullException(nameof(productsView));
         _productsService = productsService ?? throw new ArgumentNullException(nameof(productsService));
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
         _productsView.ViewLoaded += ProductsView_ViewLoaded;
         _productsView.ProductAdded += ProductsView_ProductAdded;
@@ -26,7 +29,7 @@ public class ProductsPresenter : IProductsPresenter
 
     private void ProductsView_ProductAdded(object? sender, ProductEventArgs e)
     {
-        var product = CreateProduct(e.ProductDTO);
+        var product = _mapper.Map<Product>(e.ProductDTO);
         int productId = _productsService.AddProduct(product);
         e.ProductDTO.Id = productId;
     }
@@ -39,6 +42,7 @@ public class ProductsPresenter : IProductsPresenter
         product.Name = e.ProductDTO.Name;
         product.Description = e.ProductDTO.Description;
         product.Price = e.ProductDTO.Price;
+
         _productsService.UpdateProduct(product);
     }
 
@@ -57,24 +61,9 @@ public class ProductsPresenter : IProductsPresenter
     private void LoadViewData()
     {
         var products = _productsService.GetProducts();
-        var productsDTO = products.Select(p => new ProductDTO
-        {
-            Id = p.Id,
-            Description = p.Description,
-            Name = p.Name,
-            Price = p.Price
-        }).ToList();
-
+        var productsDTO = products.Select(_mapper.Map<ProductDTO>).ToList();
         var bindingList = new BindingList<ProductDTO>(productsDTO);
         _productsView.LoadData(productsDTO);
     }
-
-    private Product CreateProduct(ProductDTO productDTO) => new()
-    {
-        Id = productDTO.Id,
-        Name = productDTO.Name,
-        Description = productDTO.Description,
-        Price = productDTO.Price
-    };
 }
 

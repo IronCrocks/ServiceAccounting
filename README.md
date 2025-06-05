@@ -1,4 +1,4 @@
-UI: WinForms + DevExpress через MVP.
-БД: EF Core + SqlLite.
-DI и маппинг классов: Autofac + Automapper.
-Юнит тесты: NUnit + Moq.
+UI: WinForms + DevExpress через MVP. <br />
+БД: EF Core + SqlLite. <br />
+DI и маппинг классов: Autofac + Automapper. <br />
+Юнит тесты: NUnit + Moq. <br />
